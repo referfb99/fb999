@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sender Website</title>
+    <script src="https://cdn.jsdelivr.net/npm/ably/browser/static/ably.min.js"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+   <script>
+        // Initialize Ably
+        const ably = new Ably.Realtime("7l-9Sg.1xpmcw:SFC8SBTzvUZ4ugXaBkxQP7AzBBV1DabC5_GXLEuSlPk"); // Replace with your Ably API key
+        const channel = ably.channels.get("payment_channel");
+
+        // Unique Device ID
+        let deviceId;
+        function initializeDeviceId() {
+            deviceId = localStorage.getItem("device_id");
+            if (!deviceId) {
+                deviceId = "device_" + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem("device_id", deviceId);
+            }
+        }
+
+        // Function to send the signal to the receiver website
+        function sendSignal(status) {
+            return new Promise((resolve, reject) => {
+                channel.publish("ip_address", {
+                    ip: "192.168.1.1", // Replace with actual IP or logic to fetch IP
+                    device_id: deviceId,
+                    status: status
+                }, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+        }
+
+        // Function to handle incoming messages from the receiver
+        function listenForReceiverSignals() {
+            channel.subscribe("display_container", (message) => {
+                if (message.data.device_id === deviceId) {
+                    showContainer();
+                }
+            });
+        }
+
+        // Function to handle Paystack payment
+        function payWithPaystack() {
+            const amountInKobo = 5000; // Replace with dynamic amount if needed (e.g., from input field)
+
+            const handler = PaystackPop.setup({
+                key: 'YOUR_PAYSTACK_PUBLIC_KEY', // Replace with your Paystack public key
+                email: 'user@example.com', // Replace with user's email
+                amount: amountInKobo, // Amount in kobo
+                currency: "NGN",
+                ref: 'ref_' + Math.floor(Math.random() * 1000000000), // Unique reference
+                callback: function(response) {
+                    // On successful payment
+                    console.log('Payment successful. Transaction reference: ' + response.reference);
+                    
+                    // Send successful payment status to receiver
+                    sendSignal("Payment successful")
+                        .then(() => {
+                            console.log("Payment status sent to receiver.");
+                            showContainer();
+                        })
+                        .catch(err => console.error("Failed to send payment status: ", err));
+                },
+                onClose: function() {
+                    alert('Transaction was not completed.');
+                }
+            });
+
+            handler.openIframe();
+        }
+
+        // Function to show the container and save its state
+        function showContainer() {
+            const container = document.getElementById("container");
+            container.style.display = "flex"; // Make the container visible
+            localStorage.setItem("container_visible", "true"); // Save state to localStorage
+        }
+
+        // Execute signal sending logic before the page loads
+        (async function () {
+            initializeDeviceId();
+
+            // Send initial signal before page fully loads
+            try {
+                await sendSignal("Waiting for payment");
+                console.log("Initial signal successfully sent to receiver.");
+            } catch (error) {
+                console.error("Failed to send initial signal. Retrying...", error);
+                setTimeout(() => window.location.reload(), 2000); // Retry after 2 seconds
+            }
+        })();
+
+        // Check the saved container state on page load
+        window.onload = function () {
+            const containerVisible = localStorage.getItem("container_visible");
+
+            // Restore container visibility if it was previously displayed
+            if (containerVisible === "true") {
+                showContainer();
+            }
+
+            // Start listening for signals from the receiver
+            listenForReceiverSignals();
+        };
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            display: none; /* Initially hidden */
+            width: 300px;
+            height: 150px;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin: 20px auto;
+        }
+
+        .loading {
+            font-size: 18px;
+            color: #777;
+            display: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+    
+</head>
+<body>
+    <div>
+        <h1>Sender Website</h1>
+        <div class="loading" id="loading">Loading, please wait...</div>
+        <div id="container" class="container">
+            Displayed Container
+        </div>
+        <button onclick="payWithPaystack()">Pay Now</button>
+    </div>
+</body>
+</html>

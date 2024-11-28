@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
+    <title>Image Slider</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'); 
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container9 {
+            background: #ffffff;
+            width: 366px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 0px;
+        margin-top: -1px;     }
+
+        .header3 {
+            text-align: center;
+        }
+
+        .header3 h2 {
+            font-size: 1.2rem;
+            color: #0c4e89;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header3 .fast-badge {
+            background-color: #ffc107;
+            color: #0c4e89;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .amount-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .amount-section h3 {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .amount-section h1 {
+            font-size: 2rem;
+            color: #0c4e89;
+            margin: 10px 0;
+        }
+
+        .amount-section p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .amount-section span {
+            font-weight: bold;
+        }
+
+        .payment-section {
+            background-color: #f1faff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .payment-section h4 {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #0c4e89;
+        }
+
+        .payment-section p {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .account-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .account-item {
+            display: flex;
+            justify-content: space-between ;
+            align-items: center;
+            background-color: #e5f5ff;
+            padding: 3px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #333;
+            position: relative;
+        }
+
+        .copy-icon {
+            cursor: pointer;
+            padding: 5px;
+            color: #0c4e89;
+            font-size: 1.3rem;
+            margin-left: 10px;
+        }
+
+        .copy-confirmation {
+            font-size: 0.8rem;
+            color: green;
+            margin-top: 5px;
+            display: none;
+            z-index: 66666;
+            
+        }
+
+        .instructions {
+            margin-top: 14px;
+        }
+
+        .instructions p {
+            font-size: 0.8rem;
+            color: #e53e3e;
+            margin: 5px 0;
+        }
+
+        .instructions a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .confirmation-button {
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .confirmation-button button {
+            background-color: #0c4e89;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .confirmation-button button:hover {
+            background-color: #083a6b;
+        }
+        .material-symbols-outlined {
+            color: #aaa;
+            position: absolute;
+            font-size: 28px;
+            font-weight: bold;
+        z-index: 9999;
+        }
+        #moda62 {
+            display: none; /* Initially hidden */
+                        position: fixed;
+                        z-index: 999999;
+                        left: 0;
+                        top: 20;
+                        width: 106%;
+                        height: 124%;
+                        overflow: auto;
+                        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #b0e0ff 0%, #d7ecff 100%);
+                        
+                        justify-content: center;
+                        align-items: center;
+               margin-top: -61px; 
+              margin-left: -15px;
+border-radius: 17px;
+        }
+        #displayField {
+              width: 266px;
+                padding: 9px;
+                font-size: 24px;
+                font-weight:bold;
+                  margin-top: 19px;
+                display: block;
+                margin-left: 59px;
+                margin-right: auto;
+               border: 1px solid #d1d1d1;
+              border-radius: 18px;         
+          position: relative;     
+         background-color:      rgba(255, 0, 0, 0.0);       
+            }
+
+            #inputField {
+                display: none; /* Hidden input field for storing numeric value */
+            }
+        .custom-modal {
+          display: none; /* Hidden by default */
+          position: fixed;
+          z-index: 9999; /* Ensure it stays on top */
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+       
+          background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+        }
+
+        .custom-modal-content {
+          position: absolute;
+          
+          padding: 0px;
+          background-color: white;
+          width: 89%;
+          max-width: 500px;
+          border-radius: 15px;
+        margin-left: 23px;         
+              overflow-y: auto;
+
+        }
+
+        .close-modal {
+          position: absolute;
+          top: 699px;
+          right: 188px;
+          font-size: 60px;
+          cursor: pointer;
+        z-index: 9999;
+        font-weight: bold;   
+        color: white;
+        }
+        .container6 {
+                background-color: white;
+                border-radius: 15px;
+                max-width: 400px;
+                width: 100%;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+
+            .header {
+                background-color: #4aa1ff;
+                color: white;
+                padding: 20px;
+                text-align: center;
+               position: absolute;
+               z-index: 30000;
+            width: 99%;  
+                                             }
+
+            .header h2 {
+                margin: 0;
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .header p {
+                margin: 5px 0 0 0;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .deposit-card {
+                padding: 17px;
+                border-bottom: 1px solid #f0f0f0;
+                position: relative;
+            }
+
+            .deposit-card:last-child {
+                border-bottom: none;
+            }
+
+            .deposit-card h3 {
+                margin: 0;
+                font-size: 18px;
+                color: #333;
+                font-weight: 500;
+            }
+
+            .deposit-card h3 span {
+                color: #FF9800;
+                font-weight: 700;
+            }
+
+            .deposit-card p {
+                margin: 8px 0;
+                font-size: 14px;
+                color: #777;
+            }
+
+            .bonus-amount {
+                color: #FF9800;
+                font-size: 16px;
+                font-weight: 700;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .progress-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 7px;
+            }
+
+            .progress-bar {
+                width: 70%;
+                background-color: #e0e0e0;
+                height: 10px;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .progress-bar div {
+                width: 0;
+                height: 100%;
+                background-color: #bbbbbb;
+                border-radius: 5px;
+            }
+
+            .deposit-button {
+                padding: 8px 20px;
+                background-color: #ffffff;
+                color: #FF9800;
+                border: 1px solid #FF9800;
+                border-radius: 8px;
+                font-size: 14px;
+                cursor: pointer;
+                text-decoration: none;
+                margin-left: 10px;
+                flex-shrink: 0;
+            }
+
+            .deposit-button:hover {
+                background-color: #ff980026;
+            }
+
+            /* Modal styles */
+            .modal5 {
+                display: none; /* Hidden by default */
+                position: fixed; 
+                z-index: 1; 
+                left: 0;
+                top: 10px;
+                width: 91%;
+               margin-left: 19px;            
+                border-radius: 20px;
+                overflow: hidden;
+         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);       
+                overflow: auto; 
+                background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+            }
+
+            .modal-content1 {
+                background-color: #fff;
+                max-height: 80vh;
+                overflow-y: auto;
+                padding: 0px;
+            }
+
+            /* Close button (X) */
+            .close {
+                color: #aaa;
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+         .new-content h3 {
+                font-size: 20px;
+                color: #333;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .new-content p {
+                margin: 8px 0;
+                font-size: 15px;
+                color: #666666;
+            }
+
+            .new-content .deposit-card h3 span {
+                color: #FF9800;
+                font-weight: 700;
+            }
+
+            .new-content .bonus-amount {
+                color: #FF9800;
+                font-size: 18px;
+                font-weight: 700;
+            } 
+            .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                background-color: #ffffff;
+                border-top: 1px solid #f0f0f0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .footer button {
+                background: none;
+                border: none;
+                color: #777777;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            .activity-button {
+                background-color: #4aa1ff;
+                color: white;
+                padding: 10px 30px;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .activity-button:hover {
+                background-color: #3690e2;
+            }
+
+            /* Extra Padding for Modal Content */
+            .modal-content .deposit-card {
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 15px;
+                background-color: #ffffff;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                position: relative;
+            }
+
+            /* Additional Content (New Image UI) */
+            .new-content {
+                margin-top: 30px;
+            }
+        .logo {
+            width: 97%;
+            height: 47px;
+            top: 0;
+            left: 0;
+            margin: 0;
+        position: fixed;
+      margin-left: 8px;
+                }
+         .container {
+            text-align: center;
+            margin-top: 0px;
+         justify-content: center;
+                 }
+        .container5 {
+            text-align: center;
+            align-items: center;
+            
+        }
+        .input-field {
+            padding: 10px;
+            width: 290px;
+        
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            
+ position: relative;
+        }
+        .input-field:focus {
+            border-color: #007BFF;
+            outline: none;
+        
+        }
+        .submit-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 17px;
+            background-color: #007BFF;
+    width: 86%;
+        text-align: center;justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+    margin-left: 21px;
+        z-index: 1000;
+        position: relative;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        z-index: 1000;
+        }
+        .message {
+            margin-top: 20px;
+            color: red;
+            font-size: 15px;
+            display: none;
+        position: absolute;    
+     font-weight: bold;  
+         
+        }
+        .pio button {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0033cc; /* Blue color */
+            color: #ffffff;
+            border: none;
+            padding: 10px 26px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: -60px;
+width: 97%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #002299; /* Darker blue */
+        }
+        button .material-icons {
+            position: absolute;
+            left: 15px;
+     top: 50%;
+            
+            transform: translateY(-50%);
+            font-size: 16px;
+        }
+        .search-container {
+            display: none;
+            max-width: 860px;
+            margin: 0 auto 20px;
+            position: relative;
+            margin-top: -60px; 
+        background-color: #ffffff;
+    z-index: 1000;  
+            font-weight: bold;  
+        }
+           .search-container input {
+            font-family: 'Roboto', sans-serif;
+            width: 76%;
+            padding: 10px 40px;
+            font-size: 16px;
+            border-radius: 5px;
+               z-index: 1000;
+            border: 1px solid #0033cc; /* Blue color */
+            color: #000000;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            outline: none;
+            font-weight: bold;
+        }
+        .search-container .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #0033cc; /* Blue color */
+            font-size: 16px;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+     z-index: 1000;       
+            margin: 0 auto;
+        }
+        li {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            border: 1px solid #0033cc; /* Blue color */
+            border-radius: 5px;
+        z-index: 1000;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            color: #000000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        font-weight: bold;
+            transition: background-color 0.3s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        li:hover {
+            background-color: #f0f0f0; /* Light grey for hover effect */
+        }
+        .selected-bank {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: -60px;
+            color: #0033cc; /* Blue color */
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .selected-bank.active {
+            border: 2px solid #0033cc; /* Blue border */
+        }
+        .selected-bank .material-icons {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .toggleText {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin: 5px;
+            display: inline-block;
+        }
+         .toggleText1 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+   position: absolute;  
+   font-size: 89px;
+   margin-left: -180px;  
+  color: rgba(255, 0, 0, 0.0);
+        }
+ .toggleText2 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -40px;            
+   color: rgba(255, 0, 0, 0.0);   
+        }
+
+        .open-text21 {
+            position: relative;
+            font-size: 89px;
+         margin-top: -410px;
+                 }
+        .modal4 {
+                    display: none; /* Initially hidden */
+                    position: fixed;
+                    z-index: 999999;
+                    left: 0;
+                    top: 0;
+                    width: 106%;
+                    height: 130%;
+                    overflow: auto;
+                    background-color: rgb(0,0,0); /* Fallback color */
+                    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+           margin-top: -61px; 
+          margin-left: -15px;
+                  }
+        .modal {
+            display: none; /* Initially hidden */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 106%;
+            height: 131%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+   margin-top: -61px; 
+  margin-left: -15px;
+          }
+        .modal9 {
+            display: none; /* Initially hidden */
+            position: fixed;
+            z-index: 17777799999;
+            left: 0;
+            top: 20px;
+            width: 106%;
+            height: 139%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        margin-top: -61px; 
+        margin-left: -15px;
+border-radius: 17px;
+          }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-height: 70%; /* Maximum height */
+            overflow-y: auto; /* Scrollable */
+            
+       }
+        .modal-content3 {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 3px;
+                border: 0.1px solid #888;
+                width: 84%; /* Could be more or less, depending on screen size */
+                max-height: 90%; /* Maximum height */
+                overflow-y: auto; /* Scrollable */
+            border-radius: 18px;
+      z-index: 1999999999;
+        }
+
+       .toggleText3 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 91px;            
+ color: rgba(255, 0, 0, 0.0);    
+        }
+    .toggleText4 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -180px;            
+   color: rgba(255, 0, 0, 0.0); 
+        }
+  .toggleText5 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -59px;            
+   color: rgba(255, 0, 0, 0.0);   
+        }
+   .toggleText6 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 79px;            
+    color: rgba(255, 0, 0, 0.0);
+        }
+        .image-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+.toggleText7 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -100px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -180px;            
+    color: rgba(255, 0, 0, 0.0);
+        }
+  .toggleText8 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -100px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 30px;            
+   color: rgba(255, 0, 0, 0.0);  
+        }
+       .image-wrapper img {
+            max-width: 95%;
+            height: auto;
+            display: none;
+        margin-left: 12px;
+          
+            }
+
+        img.active {
+            display: block;
+        }
+
+        #peace {
+            display: none;
+            position: fixed;
+            top: 178px;
+            left: 37px;
+            width: 100%;
+            height: 100%;
+            
+            z-index: 0;
+        }
+        #peace2 {
+            display: none;
+            position: fixed;
+            top: 178px;
+            left: 37px;
+            width: 100%;
+            height: 100%;
+
+            z-index: 99;
+        }
+        #close-btn {
+            display: none;
+            position: fixed;
+            top: 280px;
+            right: 240px;
+            background-color: rgba(255, 0, 0, 0.0); 
+            color: rgba(255, 0, 0, 0.0); 
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            z-index: 1;
+       font-size: 23px;
+        }
+        #close-btn4 {
+        display: none;
+        position: fixed;
+        top: 276px;
+        right: 99px;
+        background-color: rgba(255, 0, 0, 0.0); 
+     font-size: 30px;
+            color: rgba(255, 0, 0, 0.0); 
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            z-index: 0;
+        }
+        #close-btn5 {
+            display: none;
+            position: fixed;
+            top: 1px;
+            right: 329px;
+            background-color: rgba(255, 0, 0, 0.0); 
+         font-size: 25px;
+                color: rgba(255, 0, 0, 0.0); 
+                padding: 5px 10px;
+                cursor: pointer;
+                border: none;
+                border-radius: 3px;
+                z-index: 999999;
+            }
+        #close-btn3 {
+        display: none;
+        position: fixed;
+        top: 276px;
+        right: 99px;
+        background-color: rgba(255, 0, 0, 0.0); 
+        font-size: 30px;
+            color: rgba(255, 0, 0, 0.0); 
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            z-index: 333;
+        }
+.p {
+    margin-top: -300px;
+    }
+        .slider {
+            position: relative;
+            width: 91%;
+            height: 145px;
+            overflow: hidden;
+            margin-top: -17px;
+         border-radius: 17px;       
+  margin-top: 44px;     
+   margin-left: 3px; 
+        }
+         .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 300px;
+            margin: auto;
+    margin-top: -660px;
+        }
+
+        .option {
+            cursor: pointer;
+            padding: 10px;
+            text-align: center;
+            
+      color: rgba(255, 0, 0, 0.0); 
+        }
+
+        
+
+        #inputField {
+            width: 266px;
+            padding: 9px;
+            font-size: 24px;
+            font-weight:bold;
+              margin-top: 19px;
+            display: block;
+            margin-left: 59px;
+            margin-right: auto;
+           border: 1px solid #d1d1d1;
+          border-radius: 18px;         
+      position: relative;     
+     background-color:      rgba(255, 0, 0, 0.0);     
+                 }
+    #actionButton {
+            background-color: #ababab; /* Light black color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 21px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        z-index: 1000;
+       position: relative;
+margin-top: 20px;  
+width: 99%;      
+height: 47px;          
+  border-radius: 19px;   
+  margin-left: -3px;  
+  font-weight: bold;     
+                      }
+
+        #actionButton.active {
+            background-color: #007bff; /* Blue color */
+        }
+         .moda8 {
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            position: relative;
+            z-index: 1000;
+            
+    margin-top: -460px; 
+        }
+
+        .open-text2 {
+            position: relative;
+            font-size: 35px;
+            margin-bottom: -6px; /* Add spacing between items */
+      
+        }
+ p{
+     color: rgba(255, 0, 0, 0.0); 
+      }
+        .slider {
+            position: relative;
+            width: 380px;  /* Set the width of the slider */
+            height: 230px; /* Set the height of the slider */
+            overflow: hidden;
+margin-top: 3px;
+            border-radius: 10px;
+        }
+
+        .slides {
+            position: absolute;
+            width: 100%;
+            height: 400%; /* 100% height for each slide */
+            animation: slideAnimation 12s infinite;
+        }
+
+        .slide {
+            width: 100%;
+            height: 23%; /* Adjust height based on the number of slides */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+           margin-top: -1px;
+                   }
+
+        /* CSS Animation */
+        @keyframes slideAnimation {
+           0% { top: 800%; } 12.5% { top: -700%; } 25% { top: -600%; } 37.5% { top: -500%; } 50% { top: -400%; } 62.5% { top: -300%; } 75% { top: -200%; } 87.5% { top: -100%; } 100% { top: -0%;}
+       0% { top: 800%; } 12.5% { top: -700%; } 25% { top: -600%; } 37.5% { top: -500%; } 50% { top: -400%; } 62.5% { top: -300%; } 75% { top: -200%; } 87.5% { top: -100%; } 100% { top: -0%; 
+                                                                                                                                                                                       
+            }
+        }
+
+
+        
+        
+  
+        .moda7 {
+            display: flex;
+            justify-content: space-between; /* Space between the items */
+            position: relative; /* Maintain relative positioning */
+        
+            font-size: 79px;
+        }
+        .matrix-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: -10px; /* Adjust the gap between items if needed */
+    
+             /* Adjust the width as needed */
+margin-top: -300px;
+margin-left: -18px;
+        }
+        .matrix-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    color: rgba(255, 0, 0, 0.0);
+z-index: 1000;
+font-weight: bold;
+background-color: rgba(255, 0, 0, 0.0);        
+
+
+            /* Optional: Background color for each item */
+            padding: 4px;
+font-size: 61px;
+    /* Optional: Border around each item */
+        }
+        .matrix-container1 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: -10px; /* Adjust the gap between items if needed */
+z-index: 1000;
+             /* Adjust the width as needed */
+        margin-top: -76px;
+        margin-left: -18px;
+        }
+        .matrix-item1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        color: rgba(255, 0, 0, 0.0);
+z-index: 1000;
+        font-weight: bold;
+        background-color: rgba(255, 0, 0, 0.0);        
+
+
+            /* Optional: Background color for each item */
+            padding: 4px;
+        font-size: 61px;
+        /* Optional: Border around each item */
+        }
+
+        
+        .open-text1 {
+            position: relative;
+            font-size: 89px;
+         margin-top: -500px;
+                 }
+      
+        .slide-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 100%;
+            animation: slide 3.6s linear infinite;
+        }
+
+        .slide-image:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .slide-image:nth-child(2) {
+            animation-delay: 1.9s;
+        }
+
+        @keyframes slide {
+            0% {
+                left: 0;
+            }
+            40% {
+                left: 0;
+            }
+            60% {
+                left: -100%;
+            }
+            100% {
+                left: -100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="customModal" class="custom-modal">
+        <span  id="closeModal1"class="close-modal">&times;</span>
+        <div id="closeModal" class="custom-modal-content">
+          
+            <div class="modal-content1">
+                <span class="close">&times;</span>
+                <div class="container6">
+            <div style="width: 89.4%; "class="header">
+                <h2 style="margin-top: -19px; ">Extra first deposit bonus</h2>
+                <p style="color: white; font-weight: bold; ">Each account can only receive rewards once</p>
+            </div>
+            <div style="margin-top: 60px; "class="deposit-card">
+                    <h3>First deposit <span>500</span></h3>
+                    <p  >Deposit 500 for the first time and you will receive 180 bonus</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div></div>
+                        </div>
+                        <p id="openText43" style="color: #FF9800; "class="deposit-button" >Deposit</p>
+                    </div>
+                    <div class="bonus-amount">+ ₦180.00</div>
+                </div>
+
+                <div class="deposit-card">
+                    <h3>First deposit <span>2000</span></h3>
+                    <p>Deposit 2000 for the first time and you will receive 900 bonus</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div></div>
+                        </div>
+                        <p id="openText44" style="color: #FF9800; "class="deposit-button">Deposit</p>
+                    </div>
+                    <div class="bonus-amount">+ ₦900.00</div>
+                </div>
+
+                <div class="deposit-card">
+                    <h3>First deposit <span>6000</span></h3>
+                    <p>Deposit 6000 for the first time and you will receive 1500 bonus</p>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div></div>
+                        </div>
+                        <p id="openText45" style="color: #FF9800; "class="deposit-button">Deposit</p>
+                    </div>
+                    <div class="bonus-amount">+ ₦1,500.00</div>
+                </div>
+
+                <!-- New Section (Based on New Image) -->
+                <div class="new-content">
+                    <div class="deposit-card">
+                        <h3>First deposit <span>15000</span></h3>
+                        <p>Deposit 15000 for the first time and you will receive 4960 bonus</p>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div></div>
+                            </div>
+                            <p id="openText46" style="color: #FF9800; "class="deposit-button">Deposit</p>
+                        </div>
+                        <div class="bonus-amount">+ ₦4,960.00</div>
+                    </div>
+
+                    <div class="deposit-card">
+                        <h3>First deposit <span>36000</span></h3>
+                        <p>Deposit 36000 for the first time and you will receive 12000 bonus</p>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div></div>
+                            </div>
+                            <p id="openText47" style="color: #FF9800; "class="deposit-button">Deposit</p>
+                        </div>
+                        <div class="bonus-amount">+ ₦12,000.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div  class="footer">
+                <button >No more reminders today</button>
+                <button  class="activity-button">Activity</button>
+            </div>
+            </div>
+</div>
+    
+        
+        </div>
+              </div>
+    <img style="width: 95%; height: 45px; pointer-events: none;" src="logo.jpg" alt="Logo" class="logo"></img>
+  <img style="height: 56px; width: 92%; border-radius: 11px;  position: fixed; bottom: 20px; left: 11; width: 100%; z-index: 1000; pointer-events: none; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.9);" src="add1.jpg" alt="" ></img>
+  <img style="height: 60px; width: 92%; border-radius: 11px;  position: fixed; bottom: 44px; left: 11; width: 15%; z-index: 1000; pointer-events: none; border-radius: 50px;" src="add2.jpg" alt="" ></img>
+
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 100px; font-size: 22px;" id="openText1" class="open-text fixed-text">Open</p>
+<p style="position: fixed; z-index: 1000; bottom: -4px; left: 180px; font-size: 47px;"id="openText2" class="open-text fixed-text">OP </p>
+
+
+
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 260px; font-size: 22px;" id="openText6" class="open-text fixed-text">Open</p>
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 350px; font-size: 22px;" id="openText7" class="open-text fixed-text">Open</p>
+
+
+
+
+
+
+<p id="closeAllText" class="close-text fixed-text" style="position: fixed; z-index: 1000; bottom: 18px; left: 10px; font-size: 22px;">Close</p>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <p id="closeText1" class="close-text">Close</p>
+       <img style="height: 56px; width: 92%; position: fixed; margin-top: -72px; left: 13px;"src="mat5.jpg" alt="">
+  <img style="height: 450px; width: 376px; margin-left: -16px;  margin-top: -31px;" src="wat.jpg" alt=""></img> 
+ <img style="height: 320px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat1.jpg" alt=""></img>        
+    </div>
+</div>
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <p id="closeText2" class="close-text">Close</p>
+        
+   <img style="height: 56px; width: 92%; position: fixed; margin-top: -72px; left: 13px;"src="mat6.jpg" alt="">
+   <img style="height: 450px;  margin-top: -25px; width: 376px; margin-left: -16px;" src="add3.jpg" alt=""></img> 
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat4.jpg" alt=""></img>  
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat5.jpg" alt=""></img>      
+<div class="moda8">
+        <p id="openText3" class="open-text2">Open Modal 8887673</p>
+        <p id="openText4" class="open-text2">Open Modal 6666864</p>
+        <p id="openText5" class="open-text2">Open Modal 6667795</p>
+    </div>
+        <img style="height: 60px; width: 376px; margin-top: 320px; margin-left: -16px;" src="add7.jpg" alt=""></img>      
+    </div>
+</div> 
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText3" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add6.jpg" alt=""></img> 
+ <img style="height: 480px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+
+<div id="modal4" class="modal">
+    <div class="modal-content">
+       
+       <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText4" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add8.jpg" alt=""></img> 
+ <img style="height: 480px;  width: 379px;" src="add7.jpg" alt=""></img>  
+    </div>
+</div>
+
+<div id="modal5" class="modal">
+    <div class="modal-content">
+   <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px "id="closeText5" class="close-text">Close</p>    
+         <img style="height: 56px; width: 92%; position: fixed; margin-top: -21px; left: 13px;"src="mat15.jpg" alt="">
+  <img style="height: 450px; width: 376px; margin-left: -16px;  margin-top: 29px;" src="wat11.jpg" alt=""></img> 
+ <img style="height: 390px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat13.jpg" alt=""></img>
+ <img style="height: 290px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat14.jpg" alt=""></img>
+<img style="height: 360px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat15.jpg" alt=""></img>
+    </div>
+</div>
+
+<div id="modal6" class="modal">
+    <div class="modal-content">
+       <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px "id="closeText6" class="close-text">Close</p>    
+         <img style="height: 46px; width: 92%; position: fixed; margin-top: -21px; left: 13px;"src="fan2.jpg" alt="">
+  <img style="height: 410px; width: 376px; margin-left: -16px;  margin-top: 22px;" src="fan3.jpg" alt=""></img> 
+ <img style="height: 110px; width: 376px; margin-top: -6px; margin-left: -16px;" src="fan4.jpg" alt=""></img>
+   <img style="height: 390px; width: 376px; margin-top: -6px; margin-left: -16px;" src="fan5.jpg" alt=""></img> 
+ <div class="moda7">
+        <p id="openText8" class="open-text1">B</p>
+        <p id="openText40" class="open-text1">B</p>
+        <p id="openText10" class="open-text1">B</p>
+        <p id="openText11" class="open-text1">B</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; "id="closeText7" class="close-text">Close</p>
+    <img style="height: 480px;  margin-top: -71px; width: 376px; margin-left: -16px;" src="pod.jpg" alt=""></img> 
+ <img style="height: 130px; width: 376px; margin-top: -6px; margin-left: -16px;" src="pod2.jpg" alt=""></img>  
+  
+      <div class="moda7" >
+        <p id="openText15" class="open-text21">B</p>
+        <p id="openText14" class="open-text21">B</p>
+        <p id="openText12" class="open-text21">B</p>
+        <p id="openText13" class="open-text21">B</p> 
+        
+           
+        </div>
+        <div class="matrix-container">
+            <div class="matrix-item" id="openText16" >Text1 </div>
+            <div  class="matrix-item" id="openText9"  >Text1</div>
+            
+       </div>
+        <div class="matrix-container1">
+                <div class="matrix-item1" id="openText31" >Text1 </div>
+                <div  class="matrix-item1" id="openText32"  >Text1</div>
+
+           </div>
+    <p style="font-size: 46px; font-weight: bold; position: relative;z-index: 1000; background-color: rgba(255, 0, 0, 0.0);        
+margin-top: -77px;" id="openText41">i love you very </p>
+        <p style="font-size: 46px; font-weight: bold; position: relative;z-index: 1000; background-color: rgba(255, 0, 0, 0.0);        
+        margin-top: -37px;" id="openText42">i love you very </p>
+        <img style="height:
+             160px; width: 376px; margin-top: 66px; margin-left: -16px;" src="add7.jpg" alt=""></img> 
+    </div>  
+</div>
+
+    
+<div id="modal8" class="modal4">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px" id="closeText8" class="close-text">Close</p>
+      <img style="height: 59px;  margin-top: -32px; width: 93%; margin-left: -16px; position: fixed;" src="you11.jpg" alt=""></img>
+   <img style="height: 470px;  margin-top: 19px; width: 376px; margin-left: -16px;" src="you12.jpg" alt=""></img> 
+  <img style="height: 330px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you13.jpg" alt=""></img> 
+  <img style="height: 390px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you14.jpg" alt=""></img> 
+ <div class="grid-container">
+    <div class="option" onclick="updateInput('200')">200</div>
+    <div class="option" onclick="updateInput('500')">500</div>
+    <div class="option" onclick="updateInput('2000')">2k</div>
+    <div class="option" onclick="updateInput('5000')">5k</div>
+    <div class="option" onclick="updateInput('15000')">15k</div>
+    <div class="option" onclick="updateInput('50000')">50k</div>
+</div>
+        <input type="text" id="displayField" placeholder="Click an option or type" oninput="handleInput()">
+        <input type="hidden" id="inputField" maxlength="7" max="1000000">
+        <button id="actionButton" onclick="updateModalContent()">Deposit</button>
+            </div>
+        </div>
+        <div id="moda62" class="modal9">
+            <div class="modal-content3">
+   <span id="closeModal2" class="material-symbols-outlined" style="z-index: 9999999999999;">
+arrow_back
+   </span>             
+                
+                <div class="container9">
+                     <img style="height: 70px; width: 92%; border-radius: 11px;  position: absolute; top: 134px; left: 325px; width: 15%; z-index: 99000; pointer-events: none; border-radius: 30px;" src="add67.png" alt="" ></img>    
+                    <div class="header3">
+                        <h2>Initiate Payment <span class="fast-badge">Fast</span></h2>
+                    </div>
+                    <div class="amount-section">
+                        <h3>Amount to send</h3>
+                        <h1 style="margin-left: -99px;">NGN </h1>
+                        <h1 id="modalNumber" style="margin-top: -48.5px; margin-left: 65px;" >NGN 3,000</h1>
+                        <p>Fee: <span>0.00</span></p>
+                        <p>Currency: <span>NGN</span></p>
+                    </div>
+                    <div class="payment-section">
+                        <h4>Pay in the Account below</h4>
+                        <p>Copy & transfer money into the account details below. Click <b>"I have Paid"</b> when completed.</p>
+                   
+                        <div class="account-details">
+                            <div class="account-item">
+                                <span><strong>Bank:</strong><p2 style="margin-left: 135px; font-weight: bold; ">RUBIES MFB</p2> </span>
+                                <span class="material-icons copy-icon" onclick="copyToClipboard('RUBIES MFB', 'bank-confirmation')">content_copy</span>
+                            </div>
+                            <p id="bank-confirmation" class="copy-confirmation" style="color green; font-weight: bold;">Copied to clipboard!</p>
+
+                            <div class="account-item">
+                                <span><strong>Acc. Number:</strong> <p2 style="margin-left: 80px; font-weight: bold; ">9160246696</p2> </span>
+                                <span class="material-icons copy-icon" onclick="copyToClipboard('9160246696', 'acc-confirmation')">content_copy</span>
+                            </div>
+                            <p id="acc-confirmation" class="copy-confirmation" style="color green; font-weight: bold;">Copied to clipboard!</p>
+
+                            <div class="account-item">
+                                <span><strong>Merchant Name:</strong><p2 style="margin-left: 64px; font-weight: bold; ">TUAKA JACK</p2> </span>
+                                
+                            </div>
+                        </div>
+                        <div class="instructions">
+                            <p>1. Please ensure you transfer the exact amount to avoid failed transaction. A fee is deducted when we refund for inaccurate transfers.</p>
+                            <p>2. This is a one-time account number for this payment.</p>
+                            <p>3. If you have other questions, please send an email to:</p>
+                            <p><a href="mailto:wangusolutionservice@outlook.com">wangusolutionservice@outlook.com</a></p>
+                        </div>
+                    </div>
+                    <div class="confirmation-button" >
+                        <button id="closeModal3" >I have Paid</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div id="modal9" class="modal">
+    <div class="modal-content">
+    
+                <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px  "id="closeText9" class="close-text">Close</p>
+
+               <img style="height: 46px;  margin-top: -63px; width: 376px; margin-left: -16px; position: fixed; " src="add30.jpg" alt=""></img> 
+        
+
+            <img style="height: 420px;  width: 376px;margin-left: -16px;" src="add22.jpg" alt="">  
+        <img style="height: 290px;  width: 376px;margin-left: -16px;" src="add7.jpg" alt="">  
+
+    </div>
+</div>
+
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText10" class="close-text">Close</p>
+
+           <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add17.jpg" alt=""></img> 
+         <img style="height: 240px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+
+<div id="modal11" class="modal">
+    <div class="modal-content">
+   <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText11" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add16.jpg" alt=""></img> 
+ <img style="height: 270px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">   
+    </div>
+</div>
+
+<div id="modal12" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px" id="closeText12" class="close-text">Close</p>
+      <img style="height: 59px;  margin-top: -32px; width: 93%; margin-left: -16px; position: fixed;" src="you30.jpg" alt=""></img>
+   <img style="height: 170px;  margin-top: 19px; width: 376px; margin-left: -16px;" src="you31.jpg" alt=""></img> 
+  <img style="height: 90px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you33.jpg" alt=""></img> 
+        <div class="pio">
+            <button id="showBanksButton" onclick="showBanks()">
+                <span class="material-icons">search</span>Please Search For A Bank
+            </button></div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search banks..." oninput="filterBanks()">
+                <span class="search-icon material-icons">search</span>
+            </div>
+            <ul id="bankList"></ul>
+            <div id="selectedBank" class="selected-bank" onclick="showBanks()"></div>
+        <div class="container5">
+
+            <input style="margin-top: 39px;" type="text" id="accountName" class="input-field" placeholder="Please Enter Your Account Name">
+            <br>
+
+            
+            <div id="message" class="message">Insufficient Funds. Please Fund Your Account!!!</div>
+            
+
+        </div>
+        <img style="height: 213px;  margin-top: -78px; width: 376px; margin-left: -16px; margin-bottom: -52px; " src="you34.jpg" alt=""></img> 
+        <input style="margin-top: -129px; margin-left: 18px; justify-content: center;
+            align-items: center; text-align: center;" type="number" id="accountName" class="input-field" placeholder="Please Enter Your Account Number">
+        <button style="margin-top: 49px; font-weight: bold; " class="submit-button" onclick="displayMessage()">Withdraw</button>
+  <img style="height: 370px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="add37.jpg" alt=""></img> 
+          </div>
+</div>
+
+<div id="modal13" class="modal">
+    <div class="modal-content">
+    <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px "id="closeText13" class="close-text">Close</p>    
+         <img style="height: 56px; width: 92%; position: fixed; margin-top: -21px; left: 13px;"src="mat30.jpg" alt="">
+  <img style="height: 482px; width: 376px; margin-left: -16px;  margin-top: 29px;" src="wat31.jpg" alt=""></img> 
+ <img style="height: 310px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat32.jpg" alt=""></img>
+ <img style="height: 190px; width: 76px; margin-top: -6px; margin-left: -16px;" src="add7.jpg" alt=""></img>
+    </div>
+</div>
+
+<div id="modal14" class="modal">
+    <div class="modal-content">
+    <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText14" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add41.jpg" alt=""></img> 
+ <img style="height: 160px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+
+<div id="modal15" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText15" class="close-text">Close</p>
+
+           <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add42.jpg" alt=""></img> 
+         <img style="height: 160px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+
+<div id="modal16" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px  "id="closeText16" class="close-text">Close</p>
+
+           <img style="height: 53px;  margin-top: -63px; width: 376px; margin-left: -16px; position: fixed; " src="add20.jpg" alt=""></img> 
+        <img style="height: 64px;  margin-top: -20px; width: 376px; margin-left: -16px;" src="add21.jpg" alt=""></img> 
+         
+        <img style="height: 420px;  width: 376px;margin-left: -16px;" src="add22.jpg" alt="">  
+    <img style="height: 250px;  width: 376px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+    <div class="slider">
+        <img style="border-radius: 17px; pointer-events: none;" src="picture1.jpg" alt="Picture 1" class="slide-image">
+        <img style="border-radius: 17px; pointer-events: none;"src="picture2.jpg" alt="Picture 2" class="slide-image">
+    </div>
+ <img style="width: 95%; height: 45px; pointer-events: none;" src="logo11.jpg" alt="Logo" class="logo2"></img>
+ <img style="width: 95%; height: 340px; pointer-events: none;" src="logo12.jpg" alt="Logo" class="logo1"></img>
+<div id="textContainer">
+            <p class="toggleText1" data-target="image1">AB</p>
+            <p class="toggleText2" data-target="image2">AB</p>
+            <p class="toggleText3" data-target="image3">AB</p>
+            <p class="toggleText4" data-target="image4">AB</p>
+            <p class="toggleText5" data-target="image5">AB</p>
+            <p class="toggleText6" data-target="image6">AB</p>
+            <p class="toggleText7" data-target="image7">ABC</p>
+            <p class="toggleText8" data-target="image8">ABC</p>
+        </div>
+    </div>
+    
+<div class="container">
+        <div class="image-wrapper">
+            <img id="image1" src="image1.jpg" alt="Image 1">
+     
+            <img id="image2" src="image2.jpg" alt="Image 2">
+            <img id="image3" src="image3.jpg" alt="Image 3">
+            <img id="image4" src="image4.jpg" alt="Image 4">
+            <img id="image5" src="image5.jpg" alt="Image 5">
+            <img id="image6" src="image6.jpg" alt="Image 6">
+            <img id="image7" src="image7.jpg" alt="Image 7">
+            <img id="image8" src="image8.jpg" alt="Image 8">
+            <img id="peace" src="peace.jpg" style="z-index: 0;  width: 76%; height: 140px; border-radius: 17px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); "alt="Peace Image"></img></img></img></img></img></img></img></img></img>
+            <img id="peace2" src="peace2.jpg" style="z-index: 0;  width: 76%; height: 140px; border-radius: 17px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); "alt="Peace Image"></img>
+            <button id="close-btn">Close</button>
+            <button id="close-btn3">Close</button>
+        </div>
+        <button id="close-btn4">Close</button>
+        </div>
+        <button id="close-btn5">Close</button>
+        </div>
+  <img src="logo51.jpg" alt="Logo" class="logo"></img>
+  <img style="height: 41px; width: 92%; border-radius: 11px; "src="add.jpg" alt=""></img>
+ <div class="slider">
+        <div class="slides">
+            <div class="slide"><img src="fit1.jpg" alt="Winning Image 1"></div>
+            <div class="slide"><img src="fit2.jpg" alt="Winning Image 2"></div>
+            <div class="slide"><img src="fit3.jpg" alt="Winning Image 3"></div>
+            <div class="slide"><img 
+            src="fit4.jpg" alt="Winning Image 4"></div>
+            <div class="slide"><img src="fit5.jpg" alt="Winning Image 5"></div>
+            <div class="slide"><img src="fit6.jpg" alt="Winning Image 4"></div>  
+            <div class="slide"><img src="fit7.jpg" alt="Winning Image 4"></div>
+       <div class="slide"><img src="fit8.jpg" alt="Winning Image 4"></div>    
+        
+            <div class="slide"><img src="fit2.jpg" alt="Winning Image 2"></div>
+            <div class="slide"><img src="fit3.jpg" alt="Winning Image 3"></div>
+            <div class="slide"><img 
+            src="fit4.jpg" alt="Winning Image 4"></div>
+            <div class="slide"><img src="fit5.jpg" alt="Winning Image 5"></div>
+            <div class="slide"><img src="fit6.jpg" alt="Winning Image 4"></div>  
+            <div class="slide"><img src="fit7.jpg" alt="Winning Image 4"></div>
+                  </div>
+ </div>
+
+
+ 
+  
+  <img style="height: 383px; width: 376px; margin-top: 9px; margin-left: -16px;" src="wat65.jpg" alt=""></img>   
+    <img style="height: 83px; width: 376px; margin-top: 9px; margin-left: -16px;" src="add7.jpg" alt=""></img>         
+    <script>
+        function copyToClipboard(text, elementId) {
+            // Prevent default action (like text search)
+            event.preventDefault();
+
+            // Copy text to clipboard
+            navigator.clipboard.writeText(text).then(function() {
+                // Show confirmation message
+                const confirmationElement = document.getElementById(elementId);
+                confirmationElement.style.display = 'block';
+                setTimeout(() => {
+                    confirmationElement.style.display = 'none';
+                }, 2000); // Hide after 2 seconds
+            }, function(err) {
+                console.error("Error copying text: ", err);
+            });
+        }
+        function displayMessage() {
+            var message = document.getElementById('message');
+            message.style.display = 'block';
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, 3500); // Hide the message after 3.5 seconds
+        }
+        // Banks and Filtering Functionality
+        let banks = [
+            {name: "AB Microfinance Bank"}, {name: "Abbey Mortgage Bank"}, {name: "Above Only Microfinance Bank"}, 
+            {name: "Abu Microfinance Bank"}, {name: "Accelerex Network"}, {name: "Access Bank"}, 
+            {name: "Access Bank PLC (Diamond)"}, {name: "AccessMoney"}, {name: "Accion MFB"}, 
+            {name: "Addosser MFB"}, {name: "Adeyemi College Staff Microfinance Bank"}, 
+            {name: "Advans La Fayette MFB"}, {name: "AG Mortgage Bank PLC"}, {name: "Agosasa Microfinance Bank"}, 
+            {name: "Al-Barkah MFB"}, {name: "Alekun Microfinance Bank"}, {name: "Alert MFB"}, 
+            {name: "ALAT by Wema"}, {name: "Branch"}, {name: "Chaka"}, {name: "Citibank"}, 
+            {name: "Covenant Microfinance Bank"}, {name: "Cowrywise"}, {name: "Ecobank Nigeria"}, 
+            {name: "FBNQuest Merchant Bank"}, {name: "Fidelity Bank Nigeria"}, 
+            {name: "FinaTrust Microfinance Bank"}, {name: "First Bank of Nigeria"}, 
+            {name: "First City Monument Bank"}, {name: "Globus Bank"}, {name: "Guaranty Trust Bank"}, 
+            {name: "Heritage Bank Plc"}, {name: "Infinity Trust Mortgage Bank"}, {name: "Jaiz Bank"}, 
+            {name: "Kuda Bank"}, {name: "Keystone Bank Limited"}, {name: "Living Trust Mortgage Bank"}, 
+            {name: "Luno"}, {name: "MoniePoint"}, {name: "NPF Microfinance Bank"}, 
+            {name: "PalmPay"}, {name: "Paylater"}, {name: "Polaris Bank"}, {name: "Providus Bank Plc"}, 
+            {name: "Rand Merchant Bank Nigeria"}, {name: "Resort Savings & Loans"}, 
+            {name: "Rise Bank"}, {name: "Rubies Microfinance Bank"}, {name: "Sparkle Microfinance Bank"}, 
+            {name: "Standard Chartered Bank"}, {name: "Stanbic IBTC Bank Nigeria Limited"}, 
+            {name: "Sterling Bank"}, {name: "TAJBank Limited"}, {name: "Titan Trust Bank"}, 
+            {name: "Trustbond Mortgage Bank"}, {name: "Trove"}, {name: "United Bank for Africa"}, 
+            {name: "Unity Bank Plc"}, {name: "VFD Microfinance Bank"}, {name: "Wema Bank"}, 
+            {name: "Zenith Bank"}, {name: "Zedvance"}, {name: "Opay Bank"}
+        ];
+
+        function showBanks() {
+            const bankList = document.getElementById('bankList');
+            bankList.innerHTML = '';
+
+            banks.forEach(bank => {
+                const listItem = document.createElement('li');
+                listItem.textContent = bank.name;
+                listItem.onclick = function() { selectBank(bank.name) };
+                bankList.appendChild(listItem);
+            });
+
+            document.querySelector('.search-container').style.display = 'block';
+            document.getElementById('showBanksButton').style.display = 'none';
+            document.getElementById('selectedBank').style.display = 'none';
+            document.getElementById('selectedBank').classList.remove('active');
+        }
+
+        function filterBanks() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredBanks = banks.filter(bank => bank.name.toLowerCase().includes(searchInput));
+            const bankList = document.getElementById('bankList');
+            bankList.innerHTML = '';
+
+            filteredBanks.forEach(bank => {
+                const listItem = document.createElement('li');
+                listItem.textContent = bank.name;
+                listItem.onclick = function() { selectBank(bank.name) };
+                bankList.appendChild(listItem);
+            });
+        }
+
+        function selectBank(bankName) {
+            document.getElementById('bankList').innerHTML = '';
+            document.querySelector('.search-container').style.display = 'none';
+            document.getElementById('showBanksButton').style.display = 'none';
+            const selectedBankDiv = document.getElementById('selectedBank');
+            selectedBankDiv.style.display = 'block';
+            selectedBankDiv.classList.add('active');
+            selectedBankDiv.innerHTML = `<span class="material-icons">arrow_back</span>                            ${bankName}`;
+        }
+
+   let modalStack = [];
+
+document.getElementById('openText1').addEventListener('click', function() {
+    switchModal('modal1');
+});
+document.getElementById('closeText1').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText2').addEventListener('click', function() {
+    switchModal('modal2');
+});
+document.getElementById('closeText2').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText3').addEventListener('click', function() {
+    switchModal('modal3');
+});
+document.getElementById('closeText3').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText4').addEventListener('click', function() {
+    switchModal('modal4');
+});
+document.getElementById('closeText4').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText5').addEventListener('click', function() {
+    switchModal('modal5');
+});
+document.getElementById('closeText5').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText6').addEventListener('click', function() {
+    switchModal('modal6');
+});
+document.getElementById('closeText6').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText7').addEventListener('click', function() {
+    switchModal('modal7');
+});
+document.getElementById('closeText7').addEventListener('click', function() {
+    backOrCloseModal();
+});
+document.getElementById('openText8').addEventListener('click', function() {
+    switchModal('modal8');
+});
+        document.getElementById('closeText8').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText9').addEventListener('click', function() {
+            switchModal('modal9');
+        });
+        document.getElementById('closeText9').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText10').addEventListener('click', function() {
+            switchModal('modal10');
+        });
+        document.getElementById('closeText10').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText11').addEventListener('click', function() {
+            switchModal('modal11');
+        });
+        document.getElementById('closeText11').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText12').addEventListener('click', function() {
+            switchModal('modal12');
+        });
+        document.getElementById('closeText12').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText13').addEventListener('click', function() {
+            switchModal('modal13');
+        });
+        document.getElementById('closeText13').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText14').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+        document.getElementById('closeText14').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText15').addEventListener('click', function() {
+            switchModal('modal6');
+        });
+        document.getElementById('closeText15').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText16').addEventListener('click', function() {
+            switchModal('modal16');
+        });
+        
+        document.getElementById('closeText16').addEventListener('click', function() {
+            backOrCloseModal();
+        });
+        document.getElementById('openText31').addEventListener('click', function() {
+            switchModal('modal10');
+        });
+document.getElementById('openText32').addEventListener('click', function() {
+            switchModal('modal11');
+        });
+ document.getElementById('openText40').addEventListener('click', function() {
+            switchModal('modal12');
+        });
+        document.getElementById('openText41').addEventListener('click', function() {
+            switchModal('modal14');
+        });
+document.getElementById('openText42').addEventListener('click', function() {
+            switchModal('modal15');
+        });
+        document.getElementById('openText43').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+        document.getElementById('openText44').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+document.getElementById('openText45').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+document.getElementById('openText46').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+document.getElementById('openText47').addEventListener('click', function() {
+            switchModal('modal8');
+        });
+document.getElementById('closeAllText').addEventListener('click', function() {
+            closeAllModals();
+        });
+
+        function updateInput(value) {
+                document.getElementById('inputField').value = value;
+                formatAndDisplayValue(value);
+                toggleButtonState();
+            }
+
+            function handleInput() {
+                let displayField = document.getElementById('displayField');
+                let inputField = document.getElementById('inputField');
+                let value = displayField.value.replace(/,/g, ''); // Remove commas
+
+                // Validate the input value
+                if (!isNaN(value) && value.trim() !== "") {
+                    let numericValue = parseInt(value);
+
+                    // Limit to 1 million
+                    if (numericValue > 1000000) {
+                        numericValue = 1000000;
+                    }
+
+                    inputField.value = numericValue;
+                    formatAndDisplayValue(numericValue);
+                } else {
+                    inputField.value = ""; // Clear if not a valid number
+                }
+
+                toggleButtonState();
+            }
+
+            function formatAndDisplayValue(value) {
+                let displayField = document.getElementById('displayField');
+                if (!isNaN(value) && value !== "") {
+                    displayField.value = parseInt(value).toLocaleString();
+                } else {
+                    displayField.value = "";
+                }
+            }
+
+            function toggleButtonState() {
+                let inputField = document.getElementById('inputField');
+                let button = document.getElementById('actionButton');
+                if (inputField.value.trim() !== "") {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+
+            function updateModalContent() {
+                // Check if inputField has a valid value before using it
+                let inputField = document.getElementById('inputField');
+                if (inputField && inputField.value !== "") {
+                    let formattedNumber = parseInt(inputField.value).toLocaleString();
+                    document.getElementById('modalNumber').innerText = formattedNumber;
+
+                    // Show the modal
+                    document.getElementById('moda62').style.display = "block";
+                } else {
+                    alert("Please enter a valid number.");
+                }
+            }
+
+        document.getElementById('closeModal2').onclick = function() {
+              document.getElementById('moda62').style.display = 'none';
+            };
+        document.getElementById('closeModal3').onclick = function() {
+          document.getElementById('moda62').style.display = 'none';
+        };
+        function switchModal(modalId) {
+            if (modalStack.length > 0) {
+                const currentModalId = modalStack[modalStack.length - 1];
+                if (currentModalId !== modalId) {
+                    document.getElementById(currentModalId).style.display = 'none';
+                }
+            }
+    openModal(modalId);
+}
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+    modalStack.push(modalId);
+    history.pushState({ modalOpen: modalId }, '');
+}
+
+function backOrCloseModal() {
+    if (modalStack.length > 0) {
+        const currentModalId = modalStack.pop();
+        document.getElementById(currentModalId).style.display = 'none';
+        if (modalStack.length > 0) {
+            const previousModalId = modalStack[modalStack.length - 1];
+            document.getElementById(previousModalId).style.display = 'block';
+        }
+    }
+}
+
+// Listen to the popstate event to handle back button
+window.addEventListener('popstate', function(event) {
+    backOrCloseModal();
+});
+
+function closeAllModals() {
+    while (modalStack.length > 0) {
+        const currentModalId = modalStack.pop();
+        document.getElementById(currentModalId).style.display = 'none';
+    }
+}
+        
+        
+        
+                
+        const texts = document.querySelectorAll('.toggleText , .toggleText1, .toggleText2, .toggleText3, .toggleText4, .toggleText5, .toggleText6, .toggleText7, .toggleText8');
+   
+        const images = document.querySelectorAll('img:not(#peace)');
+        const peaceImage = document.getElementById('peace');
+        const closeButton = document.getElementById('close-btn');
+        const closePutton = document.getElementById('close-btn3');
+        const closeAutton = document.getElementById('close-btn4');
+        const closeSutton = document.getElementById('close-btn5');
+        const peaceTmage = document.getElementById('peace2');
+        const peaceYmage = document.getElementById('modal8');
+        // Display default image
+        let defaultImage = 'image1';
+        document.getElementById(defaultImage).classList.add('active');
+
+        texts.forEach(text => {
+            text.addEventListener('click', () => {
+                const targetId = text.getAttribute('data-target');
+                
+                // Hide all images
+                images.forEach(image => image.classList.remove('active'));
+                peaceImage.style.display = 'none'; // Hide peace image
+                closeButton.style.display = 'none';
+                closeAutton.style.display = 'none'; // Hide close button
+
+                // Show the targeted image
+                document.getElementById(targetId).classList.add('active');
+window.scrollTo({
+                    top: window.innerHeight * 0.6,
+                    behavior: 'smooth'
+                });
+                // Update default image for future use
+                defaultImage = targetId;
+            });
+        });
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                // Show peace image alongside the currently active image
+                peaceImage.style.display = 'block';
+                closeButton.style.display = 'block'; // Show close button
+                closePutton.style.display = 'block';
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            closePutton.style.display = 'none';
+            peaceImage.style.display = 'none'; // Hide close button
+            peaceTmage.style.display = 'none'; 
+  closeAutton.style.display = 'none';          
+            
+        });
+        closePutton.addEventListener('click', () => {
+            closePutton.style.display = 'none';
+            peaceTmage.style.display = 'block'; // Hide peace image
+        // Hide close button
+   closeAutton.style.display = 'block';
+        });
+        closeAutton.addEventListener('click', () => {
+            closePutton.style.display = 'none';
+            peaceYmage.style.display = 'block'; // Hide peace image
+        // Hide close button
+            closeSutton.style.display = 'block';
+        });
+        closeSutton.addEventListener('click', () => {
+            closePutton.style.display = 'none';
+            peaceYmage.style.display = 'none'; // Hide peace image
+        // Hide close button
+            closeSutton.style.display = 'none';
+        });
+            // Show the modal after 4.6 seconds
+            window.onload = function() {
+              setTimeout(function() {
+                document.getElementById('customModal').style.display = 'block';
+              }, 1900);
+            };
+
+            // Close the modal when the "x" is clicked
+            document.getElementById('closeModal').onclick = function() {
+              document.getElementById('customModal').style.display = 'none';
+            };
+        document.getElementById('closeModal1').onclick = function() {
+          document.getElementById('customModal').style.display = 'none';
+        };
+            // Close the modal when clicking anywhere outside the modal content
+            
+    </script>
+</body>
+</html>

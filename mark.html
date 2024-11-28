@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .logo {
+            width: 97%;
+            height: 47px;
+            top: 0;
+            left: 0;
+            margin: 0;
+        position: fixed;
+      margin-left: 8px;
+                }
+         .container {
+            text-align: center;
+            margin-top: 0px;
+         justify-content: center;
+                 }
+
+        .toggleText {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin: 5px;
+            display: inline-block;
+        }
+         .toggleText1 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+   position: absolute;  
+   font-size: 89px;
+   margin-left: -180px;  
+  color: rgba(255, 0, 0, 0.0);
+        }
+ .toggleText2 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -40px;            
+   color: rgba(255, 0, 0, 0.0);   
+        }
+  
+        .modal {
+            display: none; /* Initially hidden */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 106%;
+            height: 128%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+   margin-top: -61px; 
+  margin-left: -15px;
+          }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-height: 70%; /* Maximum height */
+            overflow-y: auto; /* Scrollable */
+  
+       }
+   
+       .toggleText3 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -320px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 91px;            
+ color: rgba(255, 0, 0, 0.0);    
+        }
+    .toggleText4 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -180px;            
+   color: rgba(255, 0, 0, 0.0); 
+        }
+  .toggleText5 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -59px;            
+   color: rgba(255, 0, 0, 0.0);   
+        }
+   .toggleText6 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -199px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 79px;            
+    color: rgba(255, 0, 0, 0.0);
+        }
+        .image-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+.toggleText7 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -100px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: -180px;            
+    color: rgba(255, 0, 0, 0.0);
+        }
+  .toggleText8 {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+            margin-top: -100px;
+position: absolute;  
+   font-size: 79px;
+   margin-left: 30px;            
+   color: rgba(255, 0, 0, 0.0);  
+        }
+       .image-wrapper img {
+            max-width: 95%;
+            height: auto;
+            display: none;
+        margin-left: 12px;
+          
+            }
+
+        img.active {
+            display: block;
+        }
+
+        #peace {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            z-index: 0;
+        }
+
+        #close-btn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            z-index: 2;
+        }
+.p {
+    margin-top: -300px;
+    }
+        .slider {
+            position: relative;
+            width: 91%;
+            height: 145px;
+            overflow: hidden;
+            margin-top: -17px;
+         border-radius: 17px;       
+  margin-top: 44px;     
+   margin-left: 3px; 
+        }
+         .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            max-width: 300px;
+            margin: auto;
+    margin-top: -660px;
+        }
+        .pio button {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0033cc; /* Blue color */
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        button:hover {
+            background-color: #002299; /* Darker blue */
+        }
+        button .material-icons {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+        .search-container {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .search-container input {
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            padding: 10px 40px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #0033cc; /* Blue color */
+            color: #000000;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            outline: none;
+        }
+        .search-container .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #0033cc; /* Blue color */
+            font-size: 18px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        li {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            border: 1px solid #0033cc; /* Blue color */
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 20px;
+            color: #000000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        li:hover {
+            background-color: #f0f0f0; /* Light grey for hover effect */
+        }
+        .selected-bank {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #0033cc; /* Blue color */
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .selected-bank.active {
+            border: 2px solid #0033cc; /* Blue border */
+        }
+        .selected-bank .material-icons {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .option {
+            cursor: pointer;
+            padding: 10px;
+            text-align: center;
+            
+      color: rgba(255, 0, 0, 0.0); 
+        }
+
+        
+
+        #inputField {
+            width: 266px;
+            padding: 9px;
+            font-size: 24px;
+            font-weight:bold;
+              margin-top: 19px;
+            display: block;
+            margin-left: 59px;
+            margin-right: auto;
+           border: 1px solid #d1d1d1;
+          border-radius: 18px;         
+      position: relative;     
+     background-color:      rgba(255, 0, 0, 0.0);     
+                 }
+    #actionButton {
+            background-color: #ababab; /* Light black color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 21px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        z-index: 1000;
+       position: relative;
+margin-top: 20px;  
+width: 99%;      
+height: 47px;          
+  border-radius: 19px;   
+  margin-left: -3px;  
+  font-weight: bold;     
+                      }
+
+        #actionButton.active {
+            background-color: #007bff; /* Blue color */
+        }
+         .moda8 {
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+            position: relative;
+            z-index: 1000;
+            left: 140px;
+    margin-top: -460px; 
+        }
+
+        .open-text2 {
+            position: relative;
+            font-size: 29px;
+            margin-bottom: 10px; /* Add spacing between items */
+      
+        }
+ p{
+     color: rgba(255, 0, 0, 0.5); 
+      }
+        
+.scroll-container {
+            display: flex;
+            flex-direction: column; /* Stack images vertically */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Hide horizontal overflow */
+            height: 33vh; /* Adjust height as needed */
+            width: 378px; /* Adjust width as needed */
+            padding: 2px;
+            background-color: #fff;
+            border: 1px solid #ffffff;
+   margin-left: 15px;        
+        }
+
+        .scroll-container img {
+            width: 100%; /* Adjust width to fit the container */
+            margin-bottom: 10px; /* Space between images */
+            object-fit: cover; /* Ensure images cover the container */
+        }
+        
+  
+        .moda7 {
+            display: flex;
+            justify-content: space-between; /* Space between the items */
+            position: relative; /* Maintain relative positioning */
+            z-index: 1000;
+            font-size: 79px;
+        }
+
+        .open-text1 {
+            position: relative;
+            font-size: 79px;
+         margin-top: -500px;
+                 }
+      
+        .slide-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 100%;
+            animation: slide 3.6s linear infinite;
+        }
+
+        .slide-image:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .slide-image:nth-child(2) {
+            animation-delay: 1.9s;
+        }
+
+        @keyframes slide {
+            0% {
+                left: 0;
+            }
+            40% {
+                left: 0;
+            }
+            60% {
+                left: -100%;
+            }
+            100% {
+                left: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img style="width: 95%; height: 45px; pointer-events: none;" src="logo.jpg" alt="Logo" class="logo"></img>
+  <img style="height: 56px; width: 92%; border-radius: 11px;  position: fixed; bottom: 20px; left: 11; width: 100%; z-index: 1000; pointer-events: none; box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.9);" src="add1.jpg" alt="" ></img>
+  <img style="height: 60px; width: 92%; border-radius: 11px;  position: fixed; bottom: 44px; left: 11; width: 15%; z-index: 1000; pointer-events: none; border-radius: 50px;" src="add2.jpg" alt="" ></img>
+
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 100px; font-size: 22px;" id="openText1" class="open-text fixed-text">Open</p>
+<p style="position: fixed; z-index: 1000; bottom: -4px; left: 180px; font-size: 47px;"id="openText2" class="open-text fixed-text">OP </p>
+
+
+
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 260px; font-size: 22px;" id="openText6" class="open-text fixed-text">Open</p>
+<p  style="position: fixed; z-index: 1000; bottom: 18px; left: 350px; font-size: 22px;" id="openText7" class="open-text fixed-text">Open</p>
+
+
+<p id="openText17" class="open-text fixed-text" style="top: 380px;">Open Modal 10</p>
+<p id="openText18" class="open-text fixed-text" style="top: 420px;">Open Modal 11</p>
+<p id="openText12" class="open-text fixed-text" style="top: 460px;">Open Modal 12</p>
+<p id="openText13" class="open-text fixed-text" style="top: 500px;">Open Modal 13</p>
+<p id="openText14" class="open-text fixed-text" style="top: 540px;">Open Modal 14</p>
+<p id="openText15" class="open-text fixed-text" style="top: 580px;">Open Modal 15</p>
+<p id="openText16" class="open-text fixed-text" style="top: 620px;">Open Modal 16</p>
+<p id="closeAllText" class="close-text fixed-text" style="position: fixed; z-index: 1000; bottom: 18px; left: 10px; font-size: 22px;">Close</p>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <p id="closeText1" class="close-text">Close</p>
+       <img style="height: 56px; width: 92%; position: fixed; margin-top: -72px; left: 13px;"src="mat5.jpg" alt="">
+  <img style="height: 450px; width: 376px; margin-left: -16px;  margin-top: -31px;" src="wat.jpg" alt=""></img> 
+ <img style="height: 320px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat1.jpg" alt=""></img>        
+    </div>
+</div>
+
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <p id="closeText2" class="close-text">Close</p>
+        
+   <img style="height: 56px; width: 92%; position: fixed; margin-top: -72px; left: 13px;"src="mat6.jpg" alt="">
+   <img style="height: 450px;  margin-top: -25px; width: 376px; margin-left: -16px;" src="add3.jpg" alt=""></img> 
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat4.jpg" alt=""></img>  
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat5.jpg" alt=""></img>      
+<div class="moda8">
+        <p id="openText3" class="open-text2">Open Modal 3</p>
+        <p id="openText4" class="open-text2">Open Modal 4</p>
+        <p id="openText5" class="open-text2">Open Modal 5</p>
+    </div>
+    </div>
+</div> 
+
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText3" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add6.jpg" alt=""></img> 
+ <img style="height: 480px;  width: 340px;margin-left: -16px;" src="add7.jpg" alt="">  
+    </div>
+</div>
+
+<div id="modal4" class="modal">
+    <div class="modal-content">
+       
+       <p style="z-index: 1000; position: relative; font-size: 25px; left: -9px; margin-top: -7px "id="closeText4" class="close-text">Close</p>
+        
+   <img style="height: 580px;  margin-top: -63px; width: 376px; margin-left: -16px;" src="add8.jpg" alt=""></img> 
+ <img style="height: 480px;  width: 379px;" src="add7.jpg" alt=""></img>  
+    </div>
+</div>
+
+<div id="modal5" class="modal">
+    <div class="modal-content">
+   <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px "id="closeText5" class="close-text">Close</p>    
+         <img style="height: 56px; width: 92%; position: fixed; margin-top: -21px; left: 13px;"src="mat15.jpg" alt="">
+  <img style="height: 450px; width: 376px; margin-left: -16px;  margin-top: 29px;" src="wat11.jpg" alt=""></img> 
+ <img style="height: 390px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat13.jpg" alt=""></img>
+ <img style="height: 290px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat14.jpg" alt=""></img>
+<img style="height: 360px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat15.jpg" alt=""></img>
+    </div>
+</div>
+
+<div id="modal6" class="modal">
+    <div class="modal-content">
+       <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px "id="closeText6" class="close-text">Close</p>    
+         <img style="height: 46px; width: 92%; position: fixed; margin-top: -21px; left: 13px;"src="fan2.jpg" alt="">
+  <img style="height: 410px; width: 376px; margin-left: -16px;  margin-top: 22px;" src="fan3.jpg" alt=""></img> 
+ <img style="height: 110px; width: 376px; margin-top: -6px; margin-left: -16px;" src="fan4.jpg" alt=""></img>
+   <img style="height: 390px; width: 376px; margin-top: -6px; margin-left: -16px;" src="fan5.jpg" alt=""></img> 
+ <div class="moda7">
+        <p id="openText8" class="open-text1">B</p>
+        <p id="openText9" class="open-text1">B</p>
+        <p id="openText10" class="open-text1">B</p>
+        <p id="openText11" class="open-text1">B</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal7" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; "id="closeText7" class="close-text">Close</p>
+    <img style="height: 470px;  margin-top: -71px; width: 376px; margin-left: -16px;" src="pod.jpg" alt=""></img> 
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat4.jpg" alt=""></img>  
+ <img style="height: 220px; width: 376px; margin-top: -6px; margin-left: -16px;" src="wat5.jpg" alt=""></img>  
+       
+    </div>
+</div>
+
+<div id="modal8" class="modal">
+    <div class="modal-content">
+        <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px" id="closeText8" class="close-text">Close</p>
+      <img style="height: 59px;  margin-top: -32px; width: 93%; margin-left: -16px; position: fixed;" src="you11.jpg" alt=""></img>
+   <img style="height: 470px;  margin-top: 19px; width: 376px; margin-left: -16px;" src="you12.jpg" alt=""></img> 
+  <img style="height: 330px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you13.jpg" alt=""></img> 
+  <img style="height: 390px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you14.jpg" alt=""></img> 
+ <div class="grid-container">
+    <div class="option" onclick="updateInput('200')">200</div>
+    <div class="option" onclick="updateInput('500')">500</div>
+    <div class="option" onclick="updateInput('2,000')">2k</div>
+    <div class="option" onclick="updateInput('5,000')">5k</div>
+    <div class="option" onclick="updateInput('15,000')">15k</div>
+    <div class="option" onclick="updateInput('50,000')">50k</div>
+</div>
+
+<input type="text" id="inputField" placeholder="Please enter the amount" oninput="handleInput()" maxlength="9">
+
+<button id="actionButton">Deposit</button>
+    </div>
+</div>
+
+<div id="modal9" class="modal">
+    <div class="modal-content">
+       <p style="z-index: 1000; position: fixed; font-size: 25px; left: -9px; margin-top: -10px" id="closeText9" class="close-text">Close</p>
+      <img style="height: 59px;  margin-top: -32px; width: 93%; margin-left: -16px; position: fixed;" src="you17.png" alt=""></img>
+   <img style="height: 170px;  margin-top: 19px; width: 376px; margin-left: -16px;" src="you18.png" alt=""></img> 
+  <img style="height: 330px;  margin-top: -9px; width: 376px; margin-left: -16px;" src="you19.jpg" alt=""></img> 
+  
+       
+    </div>
+</div>
+
+<div id="modal10" class="modal">
+    <div class="modal-content">
+        <p id="closeText10" class="close-text">Close</p>
+        <p>This is modal 10</p>
+    </div>
+</div>
+
+<div id="modal11" class="modal">
+    <div class="modal-content">
+        <p id="closeText11" class="close-text">Close</p>
+        <p id="closeText17" class="close-text">Close</p>
+        
+   <p id="closeText18" class="close-text">Close</p>
+       <p>This is modal 11</p>
+    </div>
+</div>
+
+<div id="modal12" class="modal">
+    <div class="modal-content">
+        <p id="closeText12" class="close-text">Close</p>
+        <p>This is modal 12</p>
+    </div>
+</div>
+
+<div id="modal13" class="modal">
+    <div class="modal-content">
+        <p id="closeText13" class="close-text">Close</p>
+        <p>This is modal 13</p>
+    </div>
+</div>
+
+<div id="modal14" class="modal">
+    <div class="modal-content">
+        <p id="closeText14" class="close-text">Close</p>
+        <p>This is modal 14</p>
+    </div>
+</div>
+
+<div id="modal15" class="modal">
+    <div class="modal-content">
+        <p id="closeText15" class="close-text">Close</p>
+        <p>This is modal 15</p>
+    </div>
+</div>
+
+<div id="modal16" class="modal">
+    <div class="modal-content">
+        <p id="closeText16" class="close-text">Close</p>
+        <p>This is modal 16</p>
+    </div>
+</div>
+    <div class="slider">
+        <img style="border-radius: 17px; pointer-events: none;" src="picture1.jpg" alt="Picture 1" class="slide-image">
+        <img style="border-radius: 17px; pointer-events: none;"src="picture2.jpg" alt="Picture 2" class="slide-image">
+    </div>
+ <img style="width: 95%; height: 45px; pointer-events: none;" src="logo11.jpg" alt="Logo" class="logo2"></img>
+ <img style="width: 95%; height: 340px; pointer-events: none;" src="logo12.jpg" alt="Logo" class="logo1"></img>
+<div id="textContainer">
+            <p class="toggleText1" data-target="image1">AB</p>
+            <p class="toggleText2" data-target="image2">AB</p>
+            <p class="toggleText3" data-target="image3">AB</p>
+            <p class="toggleText4" data-target="image4">AB</p>
+            <p class="toggleText5" data-target="image5">AB</p>
+            <p class="toggleText6" data-target="image6">AB</p>
+            <p class="toggleText7" data-target="image7">ABC</p>
+            <p class="toggleText8" data-target="image8">ABC</p>
+        </div>
+    </div>
+    
+<div class="container">
+        <div class="image-wrapper">
+            <img id="image1" src="image1.jpg" alt="Image 1">
+     
+            <img id="image2" src="image2.jpg" alt="Image 2">
+            <img id="image3" src="image3.jpg" alt="Image 3">
+            <img id="image4" src="image4.jpg" alt="Image 4">
+            <img id="image5" src="image5.jpg" alt="Image 5">
+            <img id="image6" src="image6.jpg" alt="Image 6">
+            <img id="image7" src="image7.jpg" alt="Image 7">
+            <img id="image8" src="image8.jpg" alt="Image 8">
+            <img id="peace" src="peace.jpg" alt="Peace Image">
+            <button id="close-btn">Close</button>
+        </div>
+        
+        
+  <img src="logo.jpg" alt="Logo" class="logo"></img>
+  <img style="height: 41px; width: 92%; border-radius: 11px; "src="add.jpg" alt=""></img>
+
+
+
+ 
+  <div class="scroll-container" id="scrollContainer">
+        <img src="fit1.jpg" alt="Image 1">
+        <img src="fit2.jpg" alt="Image 2">
+        <img src="fit3.jpg" alt="Image 3">
+        <img src="fit4.jpg" alt="Image 4">
+        <img src="fit5.jpg" alt="Image 5">
+        <img src="fit6.jpg" alt="Image 6">
+        <img src="fit7.jpg" alt="Image 7">
+        <img src="fit8.jpg" alt="Image 8">
+        <img src="fit9.jpg" alt="Image 9">
+        <img src="fit10.jpg" alt="Image 10">
+        <img src="fit11.jpg" alt="Image 11">
+    </div>
+     
+    <script>
+   // Banks and Filtering Functionality
+let banks = [
+    {name: "AB Microfinance Bank"}, {name: "Abbey Mortgage Bank"}, {name: "Above Only Microfinance Bank"}, 
+    {name: "Abu Microfinance Bank"}, {name: "Accelerex Network"}, {name: "Access Bank"}, 
+    {name: "Access Bank PLC (Diamond)"}, {name: "AccessMoney"}, {name: "Accion MFB"}, 
+    {name: "Addosser MFB"}, {name: "Adeyemi College Staff Microfinance Bank"}, 
+    {name: "Advans La Fayette MFB"}, {name: "AG Mortgage Bank PLC"}, {name: "Agosasa Microfinance Bank"}, 
+    {name: "Al-Barkah MFB"}, {name: "Alekun Microfinance Bank"}, {name: "Alert MFB"}, 
+    {name: "ALAT by Wema"}, {name: "Branch"}, {name: "Chaka"}, {name: "Citibank"}, 
+    {name: "Covenant Microfinance Bank"}, {name: "Cowrywise"}, {name: "Ecobank Nigeria"}, 
+    {name: "FBNQuest Merchant Bank"}, {name: "Fidelity Bank Nigeria"}, 
+    {name: "FinaTrust Microfinance Bank"}, {name: "First Bank of Nigeria"}, 
+    {name: "First City Monument Bank"}, {name: "Globus Bank"}, {name: "Guaranty Trust Bank"}, 
+    {name: "Heritage Bank Plc"}, {name: "Infinity Trust Mortgage Bank"}, {name: "Jaiz Bank"}, 
+    {name: "Kuda Bank"}, {name: "Keystone Bank Limited"}, {name: "Living Trust Mortgage Bank"}, 
+    {name: "Luno"}, {name: "MoniePoint"}, {name: "NPF Microfinance Bank"}, 
+    {name: "PalmPay"}, {name: "Paylater"}, {name: "Polaris Bank"}, {name: "Providus Bank Plc"}, 
+    {name: "Rand Merchant Bank Nigeria"}, {name: "Resort Savings & Loans"}, 
+    {name: "Rise Bank"}, {name: "Rubies Microfinance Bank"}, {name: "Sparkle Microfinance Bank"}, 
+    {name: "Standard Chartered Bank"}, {name: "Stanbic IBTC Bank Nigeria Limited"}, 
+    {name: "Sterling Bank"}, {name: "TAJBank Limited"}, {name: "Titan Trust Bank"}, 
+    {name: "Trustbond Mortgage Bank"}, {name: "Trove"}, {name: "United Bank for Africa"}, 
+    {name: "Unity Bank Plc"}, {name: "VFD Microfinance Bank"}, {name: "Wema Bank"}, 
+    {name: "Zenith Bank"}, {name: "Zedvance"}, {name: "Opay Bank"}
+];
+
+function showBanks() {
+    const bankList = document.getElementById('bankList');
+    bankList.innerHTML = '';
+    
+    banks.forEach(bank => {
+        const listItem = document.createElement('li');
+        listItem.textContent = bank.name;
+        listItem.onclick = function() { selectBank(bank.name) };
+        bankList.appendChild(listItem);
+    });
+
+    document.querySelector('.search-container').style.display = 'block';
+    document.getElementById('showBanksButton').style.display = 'none';
+    document.getElementById('selectedBank').style.display = 'none';
+    document.getElementById('selectedBank').classList.remove('active');
+}
+
+function filterBanks() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const filteredBanks = banks.filter(bank => bank.name.toLowerCase().includes(searchInput));
+    const bankList = document.getElementById('bankList');
+    bankList.innerHTML = '';
+    
+    filteredBanks.forEach(bank => {
+        const listItem = document.createElement('li');
+        listItem.textContent = bank.name;
+        listItem.onclick = function() { selectBank(bank.name) };
+        bankList.appendChild(listItem);
+    });
+}
+
+function selectBank(bankName) {
+    document.getElementById('bankList').innerHTML = '';
+    document.querySelector('.search-container').style.display = 'none';
+    document.getElementById('showBanksButton').style.display = 'none';
+    const selectedBankDiv = document.getElementById('selectedBank');
+    selectedBankDiv.style.display = 'block';
+    selectedBankDiv.classList.add('active');
+    selectedBankDiv.innerHTML = `<span class="material-icons">arrow_back</span> Selected Bank: ${bankName}`;
+}
+
+// Modal Handling and Other Functionalities
+let modalStack = [];
+
+function switchModal(modalId) {
+    if (modalStack.length > 0) {
+        const currentModalId = modalStack[modalStack.length - 1];
+        if (currentModalId !== modalId) {
+            document.getElementById(currentModalId).style.display = 'none';
+        }
+    }
+    openModal(modalId);
+}
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+    modalStack.push(modalId);
+    history.pushState({ modalOpen: modalId }, '');
+}
+
+function backOrCloseModal() {
+    if (modalStack.length > 0) {
+        const currentModalId = modalStack.pop();
+        document.getElementById(currentModalId).style.display = 'none';
+        if (modalStack.length > 0) {
+            const previousModalId = modalStack[modalStack.length - 1];
+            document.getElementById(previousModalId).style.display = 'block';
+        }
+    }
+}
+
+window.addEventListener('popstate', function(event) {
+    backOrCloseModal();
+});
+
+function closeAllModals() {
+    while (modalStack.length > 0) {
+        const currentModalId = modalStack.pop();
+        document.getElementById(currentModalId).style.display = 'none';
+    }
+}
+
+document.getElementById('closeAllText').addEventListener('click', function() {
+    closeAllModals();
+});
+
+// Image Scrolling and Toggle Functionality
+const container = document.getElementById('scrollContainer');
+const scrollAmount = 75; 
+const scrollDuration = 1000; 
+const stopDuration = 2000;
+
+function shuffleImages() {
+    const images = Array.from(container.getElementsByTagName('img'));
+    for (let i = images.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [images[i], images[j]] = [images[j], images[i]];
+    }
+    container.innerHTML = '';
+    images.forEach(img => container.appendChild(img));
+}
+
+function scrollUp() {
+    if (container.scrollTop === 0) {
+        shuffleImages(); 
+        container.scrollTop = container.scrollHeight - container.clientHeight;
+    } else {
+        container.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+    }
+}
+
+function startScrolling() {
+    setInterval(() => {
+        scrollUp();
+        setTimeout(() => {
+            container.scrollBy({ top: 0 }); 
+        }, scrollDuration);
+    }, scrollDuration + stopDuration);
+}
+
+window.onload = function() {
+    shuffleImages();
+    container.scrollTop = container.scrollHeight;
+    startScrolling();
+};
+
+const texts = document.querySelectorAll('.toggleText , .toggleText1, .toggleText2, .toggleText3, .toggleText4, .toggleText5, .toggleText6, .toggleText7, .toggleText8');
+const images = document.querySelectorAll('img:not(#peace)');
+const peaceImage = document.getElementById('peace');
+const closeButton = document.getElementById('close-btn');
+let defaultImage = 'image1';
+document.getElementById(defaultImage).classList.add('active');
+
+texts.forEach(text => {
+    text.addEventListener('click', () => {
+        const targetId = text.getAttribute('data-target');
+        images.forEach(image => image.classList.remove('active'));
+        peaceImage.style.display = 'none';
+        closeButton.style.display = 'none';
+        document.getElementById(targetId).classList.add('active');
+        window.scrollTo({ top: window.innerHeight * 1.7, behavior: 'smooth' });
+        defaultImage = targetId;
+    });
+});
+
+images.forEach(image => {
+    image.addEventListener('click', () => {
+        peaceImage.style.display = 'block';
+        closeButton.style.display = 'block';
+    });
+});
+
+closeButton.addEventListener('click', () => {
+    peaceImage.style.display = 'none';
+    closeButton.style.display = 'none';
+});
+
+// Input Field Validation and Button State Toggle
+function updateInput(value) {
+    document.getElementById('inputField').value = value;
+    toggleButtonState();
+}
+
+function handleInput() {
+    let inputField = document.getElementById('inputField');
+    let value = inputField.value.replace(/,/g, '');
+
+    if (!isNaN(value) && value.length > 0) {
+        let numericValue = parseInt(value);
+        if (numericValue > 1000000) {
+            numericValue = 1000000;
+        }
+  inputField.value = numericValue.toLocaleString();
+    } else {
+        inputField.value = ""; // Clear the field if the input is not a number
+    }
+
+    toggleButtonState();
+}
+
+function toggleButtonState() {
+    let inputField = document.getElementById('inputField');
+    let button = document.getElementById('actionButton');
+    if (inputField.value.trim() !== "") {
+        button.classList.add('active');
+    } else {
+        button.classList.remove('active');
+    }
+}
+
+// Show banks on button click
+document.getElementById('showBanksButton').addEventListener('click', function() {
+    showBanks();
+});
+
+// Handle bank search input
+document.getElementById('searchInput').addEventListener('input', function() {
+    filterBanks();
+});
+
+// Initialize modals and scrolling
+window.onload = function() {
+    shuffleImages(); // Shuffle images initially
+    container.scrollTop = container.scrollHeight; // Scroll to the bottom initially
+    startScrolling(); // Start the scrolling behavior
+};
+</script>
+   

