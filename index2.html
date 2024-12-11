@@ -239,15 +239,18 @@ setTimeout(function() {
                 if (emailSnapshot.exists()) {
                   const existingData = emailSnapshot.val();
                   const updatedAmount = (existingData.amount || 0) + amount;
-
-                  set(emailRef, { amount: updatedAmount })
-                    .catch((error) => {
-                      console.error("Error updating Firebase: ", error);
-                    });
-                } else {
-                  set(emailRef, { amount: amount })
-                    .catch((error) => {
-                      console.error("Error saving to Firebase: ", error);
+set(emailRef, {
+                ...existingData, // Preserve all existing fields
+                amount: parseFloat(updatedAmount).toFixed(2), // Update amount
+              }).catch((error) => {
+                console.error("Error updating Firebase: ", error);
+              });
+            } else {
+              // Initialize a new record if none exists
+              set(emailRef, { amount: parseFloat(amount).toFixed(2) })
+                .catch((error) => {
+                  console.error("Error saving to Firebase: ", error);
+                
                     });
                 }
               });
