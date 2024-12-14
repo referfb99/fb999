@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >
+    <title>FB999</title>
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+    import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-database.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBZehk_8tWBhQOtCcS3VTzRRSCFCLvFGQA",
+        authDomain: "tuak-9f342.firebaseapp.com",
+        databaseURL: "https://tuak-9f342-default-rtdb.firebaseio.com",
+        projectId: "tuak-9f342",
+        storageBucket: "tuak-9f342.firebasestorage.app",
+        messagingSenderId: "9176071516",
+        appId: "1:9176071516:web:38491206a78ed1c4035599",
+        measurementId: "G-BM58W3CJTQ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Initialize EmailJS
+    emailjs.init("U-DV3EV-FFOkjJsuF");
+
+    let generatedOTP = null;
+
+    // Utility function to sanitize email
+    function sanitizeEmail(email) {
+        return email.replace(/\./g, ",");
+    }
+
+    // Generate and send OTP
+    window.sendOTP = async function (emailFieldId, messageFieldId) {
+  
+     document.getElementById('regist').classList.add('loading1');
+     document.getElementById('frank').classList.add('loading3');
+        const email = document.getElementById(emailFieldId).value;
+        const messageEl = document.getElementById(messageFieldId);
+
+        if (!email) {
+   document.getElementById('regist').classList.remove('loading1');           
+ document.getElementById('frank').classList.remove('loading3');        
+            messageEl.textContent = "Please enter a valid email.";
+   messageEl.classList.add("error-message");        
+            hideMessage(messageEl);
+          
+            return;
+        }
+
+        generatedOTP = Math.floor(100000 + Math.random() * 900000); // Generate 6-digit OTP
+
+        const templateParams = {
+            to_email: email,
+            otp_code: generatedOTP,
+       link_message: 'Fb999',
+      text: 'Your Fb999 Verification Code'
+        };
+
+        try {
+            await emailjs.send('service_7r47p64', 'template_19whrab', templateParams);
+            messageEl.textContent = "OTP sent to your email.";
+  messageEl.classList.add("success-message"); 
+ hideMessage(messageEl); document.getElementById('regist').classList.remove('loading1');    
+   document.getElementById('frank').classList.remove('loading3');      
+        } catch (error) {
+            messageEl.textContent = "Failed to send OTP. Please try again.";
+    messageEl.classList.add("error-message"); document.getElementById('regist').classList.remove('loading1');      
+    document.getElementById('frank').classList.remove('loading3');          
+        }
+    };
+    function hideMessage(messageEl) {
+    setTimeout(() => {
+        messageEl.textContent = ""; // Clear the message
+        messageEl.classList.remove("error-message", "success-message"); // Remove styling classes
+    }, 3000); // 3000 milliseconds = 3 seconds
+}
+// Function to show a loading spinner inside a button
+        function showLoading(button) {
+            button.disabled = true;
+            button.innerHTML = '<div class="loader"></div>';
+        }
+
+        // Function to reset the button's original state
+        function resetButton(button, originalText) {
+            button.disabled = false;
+            button.innerHTML = originalText;
+        }
+    // Register user function
+    window.registerUser = async function () {
+       
+        event.preventDefault();
+      const button = event.target.querySelector('button');
+            const originalText = button.textContent;
+            showLoading(button);
+
+  
+        const email = document.getElementById("registerEmail").value;
+      if (email && /\S+@\S+\.\S+/.test(email)) {
+        // Store the email in local storage
+        localStorage.setItem("userEmail", email); 
+      } 
+        const password = document.getElementById("registerPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const otp = document.getElementById("registerOTP").value;
+        const messageEl = document.getElementById("registerMessage");
+const tickContainer = document.querySelector('.tick-container');
+     if (!tickContainer.classList.contains('clicked')) {
+     alert('Please click the tick box!');   
+     resetButton(button, originalText);
+      return;  
+      
+       }
+        if (password !== confirmPassword) {
+       resetButton(button, originalText);    
+            messageEl.textContent = "Passwords do not match.";
+     messageEl.classList.add("error-message");     
+   hideMessage(messageEl);
+        return; 
+            return;
+        }
+
+        if (otp != generatedOTP) {
+      resetButton(button, originalText);      
+            messageEl.textContent = "Incorrect OTP.";
+       messageEl.classList.add("error-message");
+   hideMessage(messageEl);       
+            return;
+        }
+
+        const sanitizedEmail = sanitizeEmail(email);
+        const emailRef = ref(database, `messages/${sanitizedEmail}`);
+        const snapshot = await get(emailRef);
+
+        if (snapshot.exists()) {
+        resetButton(button, originalText);   
+            messageEl.textContent = "User already exists. Please login!";
+  messageEl.classList.add("error-message");
+       hideMessage(messageEl);
+        } else {
+            await set(emailRef, { password, amount: 0 });
+       resetButton(button, originalText);  
+            messageEl.textContent = "Registration successful.";
+     messageEl.classList.add("success-message");
+     setTimeout(openManPage, 2000);
+       
+        }
+    };
+window.loginUser = async function (event) {
+           
+            event.preventDefault();
+    document.getElementById('colorButton').classList.add('loading2');      
+       const messageEl = document.getElementById("loginMessage");   
+            const email = document.getElementById("loginEmail").value;
+   if (email && /\S+@\S+\.\S+/.test(email)) {
+        // Store the email in local storage
+        localStorage.setItem("userEmail", email); 
+      }         
+            const password = document.getElementById("loginPassword").value;
+            const sanitizedEmail = email.replace(/\./g, ",");
+
+            const emailRef = ref(database, `messages/${sanitizedEmail}`);
+            get(emailRef).then((snapshot) => {
+                if (snapshot.exists() && snapshot.val().password === password) {
+                   setTimeout(openManPage, 100);
+                } else {
+                    messageEl.textContent = "Invalid email or password.";
+            messageEl.classList.add("error-message");   
+     hideMessage(messageEl);      
+      document.getElementById('colorButton').classList.remove('loading2');               
+                }
+            });
+        };
+        
+    // Reset password function
+    window.resetPassword = async function () {
+  document.getElementById('henry').classList.add('loading2');         
+        const email = document.getElementById("resetEmail").value;
+      if (email && /\S+@\S+\.\S+/.test(email)) {
+        // Store the email in local storage
+        localStorage.setItem("userEmail", email); 
+      }   
+        const password = document.getElementById("resetPassword").value;
+        const confirmPassword = document.getElementById("resetConfirmPassword").value;
+        const otp = document.getElementById("resetOTP").value;
+        const messageEl = document.getElementById("resetMessage");
+
+        if (password !== confirmPassword) {
+            messageEl.textContent = "Passwords do not match.";
+     document.getElementById('henry').classList.remove('loading2');              
+           messageEl.classList.add("error-message"); 
+ 
+ hideMessage(messageEl);             
+           return;
+        }
+
+        if (otp != generatedOTP) {
+            messageEl.textContent = "Incorrect OTP.";
+  messageEl.classList.add("error-message");        
+       hideMessage(messageEl);         
+     document.getElementById('henry').classList.remove('loading2');                
+            return;
+        }
+
+        const sanitizedEmail = sanitizeEmail(email);
+        const emailRef = ref(database, `messages/${sanitizedEmail}`);
+        const snapshot = await get(emailRef);
+
+        if (snapshot.exists()) {
+            await update(emailRef, { password });
+            messageEl.textContent = "Password changed successfully.";
+     messageEl.classList.add("success-message");     
+   setTimeout(openManPage, 2000); document.getElementById('henry').classList.remove('loading2');                
+            
+        } else {
+            messageEl.textContent = "User does not exist.";
+        }
+    };
+
+    window.togglePasswordVisibility = function (fieldId) {
+    const field = document.getElementById(fieldId); // Find the password field by ID
+    const icon = field.parentElement.querySelector('.material-icons'); // Find the icon within the same form group
+
+    if (field.type === "password") {
+        field.type = "text"; // Show the password
+        icon.textContent = "visibility_off"; // Change icon to "eye with a slash"
+    } else {
+        field.type = "password"; // Hide the password
+        icon.textContent = "visibility"; // Change icon to "eye"
+    }
+};
+
+</script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+        }
+      
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 250%;
+            background-color: white; /* Green overlay when loader is active */
+            z-index: 99999990;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+      
+        } 
+      #content {
+          width: 100%;
+          height: auto;
+      }
+        .container {
+            width: 84%;
+            height: 81vh;
+            overflow-y: scroll;
+            padding: 20px;
+           
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-top: -92px;
+  background-image: url('lopp.jpg');
+    background-size: cover; /* Cover the entire element */
+    /* Center the image */
+    background-repeat: no-repeat;      
+     border-radius: 6px;  
+    text-align: center;
+    align-items: center; 
+    justify-content: center; 
+      margin-left: 12px;
+        }
+   
+        .content {
+            height: 818px; /* For demonstration; content height to enable scrolling */
+        }
+        .logo img {
+            height: 57.5px; /* For demonstration; content height to enable scrolling */
+ position: fixed;
+margin-top: -37px;
+margin-left: -47.5%;
+width: 95%;
+border-radius: 6px;
+border: none;
+
+}
+.logo1 img{
+  margin-top: 18px;
+margin-left: -17px;
+width: 110%;
+border-radius: 4px; 
+   
+}
+ .p{
+   font-size: 30px;
+   margin-top: -200px;
+    
+      }
+      .logo2 img{
+  margin-top: -31px;
+margin-left: -15px;
+width: 110%;
+border-radius: 4px; 
+   
+}
+.tick-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #6a6a6a; /* Optional: to make the circle visible on a white background */
+        }
+
+        .tick {
+            display: none;
+            position: absolute;
+            width: 9px;
+            height: 20px;
+            border: solid white;
+            border-width: 0 4px 4px 0;
+            transform: rotate(45deg);
+        }
+
+        .tick-container.clicked {
+            background-color: #408cfff5;
+        }
+
+        .tick-container.clicked .tick {
+            display: block;
+        }
+ .tick-container, tick{
+    margin-top: -229px;
+  margin-left: -11px;
+   }
+   .email{
+ margin-top: -505px;
+ 
+    }
+   .email input{
+      height: 29px;
+      border-radius: 11px;
+      border: none;
+      width: 93%;
+     font-size: 17px;
+   padding: 10px;
+                    }
+ .input-container {
+            position: relative;
+               width: 86%;
+      height: 38px;  
+    margin-top: 41px;
+        }
+.input-container input {
+   height: 29px;
+   width: 110%;
+}
+        .input-field {
+            width: 19%;
+            padding: 10px;
+            padding-right: 50px; /* Make space for the button */
+       margin-top: -5px;  
+             
+        }
+
+        .input-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            padding: 0 10px;
+            border: none;
+            background-color: #2b96ffec;
+            color: white;
+            cursor: pointer;
+       border-radius: 18px;
+       width: 30%;
+       font-size: 16px;
+     margin-right: -50px;
+     
+     
+                  }
+  .input-button1 {
+            position: absolute;
+            right: 0;
+         top: 4px;   
+            height: 61%;
+            padding: 7px 7px;
+            border: none;
+            background-color: #2b96ffec;
+            color: white;
+            cursor: pointer;
+       border-radius: 19px;
+       width: 29%;
+       font-size: 16px;
+     margin-right: -50px;
+     text-align: center;
+     align-items: center;
+      justify-content: center;
+       margin-top: -4px;          
+              display: inline-flex;
+                  }
+ 
+   .email3 {
+      margin-top: 71.8px;
+     position: relative;
+   }
+   .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  .email4 {
+      margin-top: 59px;
+     position: relative;
+     width: 100%;
+     }
+ .button1 {
+    margin-top: 10px;
+    
+ }    
+ .button1 button {
+     height: 51px;
+    width: 92%;
+    border-radius: 23px;
+    border: none;
+    margin-left: 17px;
+    font-size: 18px;
+    color: white;
+    background-color: blue;
+   font-weight: bold;
+   position: relative;
+       margin-top: 160px;       
+                }
+      
+       #success-image {
+            display: none;
+            width: 70px;
+            height: 70px;
+            margin-top: -440px;
+         position: relative;
+   margin-left: 149px;    
+   border-radius: 10px;                
+   color: green;
+ z-index: 99999999999999;
+   }
+   
+           
+                   
+ 
+  
+
+ .closebtn {
+    position: relative;
+    top: -80px;
+    right: 25px;
+    font-size: 39px;
+    margin-left: 24px;
+    margin-bottom: -123px;
+    font-size: 78px;
+    color: white;
+z-index: 40000;
+}
+
+.openimg {
+    width: 50px; /* Adjust the size as needed */
+    cursor: pointer;
+}   
+.container2 {
+            width: 84%;
+            height: 81vh;
+            overflow-y: scroll;
+            padding: 90px;
+           
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-top: -3px;
+        }
+    .man img{
+        width: 111%;
+margin-left: -17px;  
+        margin-top: 0.8px;
+    
+    pointer-events: none;
+             
+                    }
+  
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 99999999999999;
+    margin-left: -38px;
+    top: 24px;
+    width: 101%;
+    height: 130%;
+    overflow: auto;
+    background-color: rgba(255, 0, 0, 0.0);
+  margin-top: -57px;
+
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: rgba(255, 0, 0, 0.0);
+    margin: 15% auto;
+    padding: 0px;
+    
+    width: 85%;
+    height: 67%;
+
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-img {
+    width: 100%;
+} 
+.lot input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 82%;
+    height: 35px;
+        margin-top: -239px;
+    position: absolute;    
+border: none;
+border-radius: 13px; 
+font-size: 17px;
+}
+.lot1 input {
+    display: block;
+    
+    padding: 8px;
+    width: 82%;
+   height: 35px;
+    margin-top: -124px;
+   position: absolute;
+  border-radius: 13px;
+border: none;   
+font-size: 17px;    
+     }
+.top button {
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 17px;
+            cursor: pointer;
+       margin-top: -629px; 
+      width: 800px;   
+     margin-left: 28px;
+  font-weight: bold;
+  font-size: 18px;
+     display: inline-block;      
+       text-align: center;
+       align-items: center;
+       justify-content: center;
+             }
+
+       
+    .tap {
+      margin-top: -110px;
+      position: absolute;     
+   margin-left: 78%; 
+      }
+      #loadingImage {
+      display: none;
+      width: 104%; /* Adjust as needed */
+      height: 106vh;
+   z-index: 9999999999999;
+   position: fixed;
+   margin-left: -14px;
+  margin-top: -137px;
+    }
+    .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            width: 19px;
+            height: 19px;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+  .loader1 {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border: 3px solid transparent;
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 0.3s linear infinite;
+            visibility: hidden;
+       display: inline-block;
+        }
+
+   /* Hide button text when loading */
+        .loading1 .button-text {
+            visibility: hidden;
+        }
+.loading2 .button-text1 {
+            visibility: hidden;
+        }
+        .loading1 .loader1 {
+            visibility: visible;
+       
+        }
+        .loading2 .loader1 {
+            visibility: visible;
+       margin-left: -34px;
+        }
+ .loading3 .loader1 {
+            visibility: visible;
+       
+     
+        }
+ .loading3 .button-text3 {
+            visibility: hidden;
+ }
+ .error-message {
+ color: red;
+        font-weight: bold;
+   text-align: center; 
+  background-color: white;
+  border-radius: 19px;
+   width: 74%;
+   z-index: 9999999999999999999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);  
+    justify-content: center;
+    align-items: center;
+    margin-left: 37px;
+          }
+    .success-message {
+       color: #69da24;
+        font-weight: bold;
+    text-align: center; 
+   background-color: white;
+  border-radius: 19px;
+   justify-content: center;
+    align-items: center;
+    margin-left: 37px;
+   z-index: 9999999999999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+   width: 74%;
+    }
+  .img{
+      pointer-events: none;
+  }
+    </style>
+   <div id="content">
+   <div class="overlay" id="overlay"></div>
+     <div id="container21">
+    <img id="loadingImage" src="display.jpg" alt="Loading..."></img></div>
+ 
+
+<div class="bobb" style="height: 38px; width: 80%; position: fixed; margin-top: 76vh; margin-left: 28px; ">
+      <img style="height: 38px; width: 98%; margin-left: 18px;" src="bob.jpg" alt="" ></img>
+     </div>
+    <div class="container">
+   
+
+       
+ <div class="content">
+           <div class="logo">
+<img src="logo51.jpg" alt=""><img></div> 
+            <div class="logo1">
+<img src="logo1.jpg" alt=""><img>
+       
+ <div class="logo2">
+<img src="logo2.jpg" alt=""><img>
+        
+  <div class="logo3">
+<img style="margin-top: -14px;" src="logo3.jpg" alt=""><img>
+<div class="logo4">
+<img src="logo4.jpg" alt=""><img> 
+ 
+ 
+  <div class="tick-container" onclick="toggleTick()">
+        <div class="tick"></div>
+    </div>  
+    <form onsubmit="registerUser()">
+         <div class="email">   
+            <input style="margin-top: -6px;"type="email" id="registerEmail" placeholder="Please enter your email" required>
+   
+ <div class="input-container">
+    <input class="input-field" type="number" id="registerOTP" placeholder="Please enter the confirmation code" required><br><br>
+     <h3 id="regist" class="input-button1"type="button" onclick="sendOTP('registerEmail', 'registerMessage')"><span style ="text-align: center; align-items: center; justify-content: center; "class="button-text">Send</span>
+        <div class="loader1"></div> </h3>
+    </div>   
+         
+             <div class="email3" >
+                <input type="password" id="registerPassword" placeholder="Set password" required>
+                <span class="toggle-password material-icons" onclick="togglePasswordVisibility('registerPassword')">visibility</span>
+            </div>
+            
+            <div class="email4">
+                <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                <span class="toggle-password material-icons" onclick="togglePasswordVisibility('confirmPassword')">visibility</span>
+            </div>
+          
+           <div class="button1" > 
+            <button type="submit">Register</button></div>
+        </form>
+        
+   
+   
+ 
+  <div  style="margin-top: -70px;">
+   <h2 id="side1" style="height: 40px; width: 40%; margin-left: 150px; margin-top: -110px; background-color: rgba(255, 0, 0, 0.0); z-index: 100000000; position: relative; cursor:pointer;"></h2></div>
+
+
+
+
+ 
+  </div>
+    <h2 id="myImage"   style="height: 58px; width: 88%; margin-left: 21px; cursor:pointer; margin-top: 84px; background-color: rgba(255, 0, 0, 0.0); z-index: 9999999999999; position: relative;"></h2> 
+    <p style="margin-top: -154%; font-weight: bold; font-size: 16px; position: relative; "id="registerMessage"></p>
+    </div>  
+   
+   
+</div>
+      
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+   
+ <div class="logo3">
+<img style="margin-left: -14px; border-radius: 6px;"src="rat1.jpg" alt="" style="margin-top: -21px;"><img>
+<div class="logo2">
+
+  <img style="margin-left: -14px; margin-top: -33px; border-radius: 6px; width: 110%; "id="sendEmailImage" src="rat2.jpg" alt="Send Email"></img>  </div>
+          <div class="close" style="margin-top: -780px; position: relative; font-size: 60px; background-color: rgba(255, 0, 0, 0.0); margin-left: -20px; width: 19%; height: 60px;  " id="close2"></div>
+     <div class="close" id="close3" style="margin-top: -180px; position: relative; font-size: 60px;  background-color: rgba(255, 0, 0, 0.0); margin-left: 20px; width: 89%; height: 60px;" ></div>   
+      <div class="close" id="reset" style="margin-top: -100px; position: relative; font-size: 60px;  background-color: rgba(255, 0, 0, 0.0); margin-left: 20px; width: 89%; height: 60px;" ></div>   
+      <form onsubmit="loginUser(event)">
+         <div class="lot">     
+            <input type="email" id="loginEmail" placeholder="Please input your email" required></div>
+            <div class="lot1">
+                <input type="password" id="loginPassword" placeholder="Enter password" required>
+          <div class="tap">   
+                <span style="margin-top: -4px; "class="material-icons" onclick="togglePasswordVisibility('loginPassword')">visibility</span>
+            </div></div>
+   <div class="top" style="margin-top: -220px; ">
+  <button type="submit" style="width: 86%; height: 47px; display: inline-block; text-align: center; align-items: center; justify-content: center; " id="colorButton" ><span class="button-text1">Login</span>
+        <div class="loader1"></div></button></div>        
+        </form>
+        <p style="font-size: 18px; margin-top: -93px; position: relative;" id="loginMessage"></p>
+    </div>
+
+     
+        </div>
+ </div></div></div>
+    <div id="myModal3" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">         
+      <p style="font-size: 20px; margin-top: -43px; position: relative; height: 9%; width: 40%; background-color: rgba(255, 0, 0, 0.0); position: fixed; z-index: 9999; margin-left: -13px; "  id="talk"></p>
+       <div class="man">
+       <img style="margin-top: -29px; position: fixed; width: 95.5%; margin-left: -47%;" src="man11.jpg" alt="">
+    </div>  
+    <div class="man">
+       <img style="margin-top: -11px;" src="man.jpg" alt="">
+   
+    </div>  
+       <div  class="man">
+      <img style="margin-top: -8.9px;"src="man1.jpg" alt="">
+    </div>
+   <div  class="man">
+       <img style="margin-top: -9.3px;" src="man2.jpg" alt="">
+    </div> 
+    
+     <div class="man">
+       <img style="margin-top: -26px;"src="man3.jpg" alt="">
+    </div>  <div class="man">
+       <img src="man4.jpg" alt="">
+    </div>  <div class="man">
+       <img src="man8.jpg" alt="">
+    </div> <div class="man">
+       <img src="man6.jpg" alt="">
+    </div> <div class="man">
+       <img src="man7.jpg" alt="">
+    </div> 
+    
+                    <!-- Sidebar -->
+       </div>      </div> 
+    <div id="myModal2" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+   <div class="logo3">
+<img style=" margin-top: -27px; margin-left: -15px; width: 110%; height: 190%;"src="rat3.jpg" alt="" style="margin-top: -21px;"><img>
+<img style=" margin-top: -27px; margin-left: -15px; width: 110%; height: 40%; border-radius: 6px;"src="rat4.jpg" alt="" style="margin-top: -21px;"><img>
+    <div style="margin-top: -169%; "class="email">                                 
+ <input type="email" id="resetEmail" placeholder="Please enter your email" required>
+
+<div style="margin-top: 14%; "class="input-container">
+        <input type="number" class="input-field" id="resetOTP" placeholder="Please enter the confirmation code">
+         <h3 id="frank" class="input-button1" type="button" onclick="sendOTP('resetEmail', 'resetMessage')"><span style ="text-align: center; align-items: center; justify-content: center;" class="button-text3">Send</span>
+        <div class="loader1"></div></h3>
+    </div>
+  <div style="margin-top: 22%; "class="email3">
+                <input type="password" id="resetPassword" placeholder="Set new password" required>
+                <span class="toggle-password material-icons" onclick="togglePasswordVisibility('resetPassword')">visibility</span>
+            </div>
+            <div class="email4">
+                <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" required>
+                <span class="toggle-password material-icons" onclick="togglePasswordVisibility('resetConfirmPassword')">visibility</span>
+            </div>
+<div style="margin-top: -35%; "class="button1" >
+ <button id="henry"onclick="resetPassword()"><span class="button-text1">Reset</span>
+        <div class="loader1"></div></button>
+ <div  id="grace" style="margin-top: -187%; position: relative; font-size: 60px;  background-color: rgba(255, 0, 0, 0.0); margin-left: -7%; width: 29%; height: 60px;" ></div>           
+        <p style="font-size: 18px; margin-top: 82%; position: relative;" id="resetMessage"></p></div>
+
+</div>
+   
+    </div>
+      
+<script>
+   // Check if Man Page should be opened
+        window.onload = function () {
+            if (localStorage.getItem('isManPageOpen') === 'true') {
+                openManPage(); // Open Man Page if it was previously opened
+            } 
+        };
+
+        function openManPage() {
+            // Save state to localStorage
+            localStorage.setItem('isManPageOpen', 'true');
+
+            // Create and load iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = 'index33.html';
+            iframe.style.width = '100%';
+            iframe.style.height = '100vh';
+            iframe.style.border = 'none';
+
+            // Clear the page content and add the iframe
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = '';
+            contentDiv.appendChild(iframe);
+        }
+
+        function closeManPage() {
+            // Remove state from localStorage
+            localStorage.removeItem('isManPageOpen');
+location.reload();
+        
+            
+        } document.addEventListener("DOMContentLoaded", function () {
+  const image = document.getElementById("loadingImage");
+
+  // Display the image
+  
+
+  // Set timeout to hide the image after 3 seconds
+  setTimeout(() => {
+    image.style.display = "block";
+  }, 2800); // 7000ms = 3 seconds
+setTimeout(() => {
+    image.style.display = "none";
+  }, 5200); // 7000ms = 3 seconds
+
+
+ }); 
+   setTimeout(function() {
+            const overlay = document.getElementById('overlay');
+
+            overlay.style.display = 'none';  // Hide the overlay after 3 seconds
+            
+        }, 3000); // 3000 milliseconds = 3
+    
+
+
+    document.getElementById('myImage').addEventListener('click', function() {  
+ document.getElementById('myModal').style.display = 'block';
+history.pushState({ modalOpe: true }, ''); 
+window.addEventListener('popstate', (event) => {
+      if (!event.state?.modalOpe) {
+        // Close the modal if the state does not indicate it's open
+        document.getElementById("myModal").style.display ="none"
+     
+      }
+    });   
+ });
+document.getElementById('reset').addEventListener('click', function() {  
+ document.getElementById('myModal2').style.display = 'block';
+history.pushState({ modalOp: true }, ''); 
+window.addEventListener('popstate', (event) => {
+      if (!event.state?.modalOp) {
+        // Close the modal if the state does not indicate it's open
+        document.getElementById("myModal2").style.display ="none"
+     
+      }
+    });   
+ }); document.getElementById('close2').addEventListener('click', function() {  
+ document.getElementById('myModal').style.display = 'none';
+ });
+ document.getElementById('close3').addEventListener('click', function() {  
+ document.getElementById('myModal').style.display = 'none';
+ });
+ document.getElementById('grace').addEventListener('click', function() {  
+ document.getElementById('myModal2').style.display = 'none';
+
+ }); 
+
+ document.getElementById('side1').addEventListener('click', function() {  
+    document.getElementById("myModal3").style.display ="block"
+   history.pushState({ modalOpa: true }, ''); 
+window.addEventListener('popstate', (event) => {
+      if (!event.state?.modalOpa) {
+        // Close the modal if the state does not indicate it's open
+        document.getElementById("myModal3").style.display ="none"
+        }
+        });
+});
+document.getElementById('talk').addEventListener('click', function() {  
+    document.getElementById("myModal3").style.display ="none"
+   
+});
+function toggleTick() {
+            const container = document.querySelector('.tick-container');
+            container.classList.toggle('clicked');
+    }
+</script>
+</body>
+</html>
